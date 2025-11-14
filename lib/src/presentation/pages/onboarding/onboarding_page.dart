@@ -1,5 +1,7 @@
+import 'package:edufy_mobile/src/routes/app_router.dart';
 import 'package:edufy_mobile/src/shared/configs/export.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
@@ -141,7 +143,7 @@ class _ButtonsSection extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () => context.go(AppRouter.root),
             child: const Text(
               'Bỏ qua',
               style: TextStyle(

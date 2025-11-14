@@ -8,6 +8,7 @@ import 'package:edufy_mobile/src/presentation/pages/lesson/detail/lesson_detail_
 // Lesson
 import 'package:edufy_mobile/src/presentation/pages/lesson/listing/lesson_listing_page.dart';
 import 'package:edufy_mobile/src/presentation/pages/notfound/notfound_page.dart';
+import 'package:edufy_mobile/src/presentation/pages/onboarding/onboarding_page.dart';
 import 'package:edufy_mobile/src/presentation/pages/order/detail/order_detail_page.dart';
 // Order
 import 'package:edufy_mobile/src/presentation/pages/order/listing/order_listing_page.dart';
@@ -27,6 +28,7 @@ class AppRouter {
   static const String splash = '/splash';
   static const String root = '/root';
   static const String login = '/login';
+  static const String onboarding = '/onboarding';
 
   // ====== COURSE ======
   static const String courseListing = '/courses';
@@ -180,6 +182,11 @@ class AppRouter {
           GoRoute(
             path: AppRouter.checkoutSuccess,
             builder: (context, state) => const CheckoutSuccessPage(),
+          ),
+
+          GoRoute(
+            path: AppRouter.onboarding,
+            builder: (context, state) => const OnboardingPage(),
           ),
         ],
         errorBuilder: (context, state) => const NotfoundPage(),

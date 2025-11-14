@@ -1,3 +1,4 @@
+import 'package:edufy_mobile/src/app.dart';
 import 'package:flutter/material.dart';
 import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
 
@@ -7,14 +8,5 @@ Future<void> main() async {
   // Khởi tạo DI, repositories, Dio, v.v...
   await Ioc.initialize();
 
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello Edufy!'),
-        ),
-      ),
-    ),
-  );
+  runApp(const EdufyApp());
 }
