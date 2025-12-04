@@ -1,6 +1,6 @@
+import 'package:edufy_mobile/src/data/models/course/course_model.dart';
 import 'package:edufy_mobile/src/data/repositories/course/i_course_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'course_detail_state.dart';
 
 class CourseDetailCubit extends Cubit<CourseDetailState> {
@@ -8,6 +8,16 @@ class CourseDetailCubit extends Cubit<CourseDetailState> {
 
   CourseDetailCubit({required this.courseRepository})
       : super(const CourseDetailState());
+
+  void setInitialCourse(CourseModel course) {
+    emit(
+      state.copyWith(
+        course: course,
+        isLoading: false,
+        exception: null,
+      ),
+    );
+  }
 
   Future<void> load(int courseId) async {
     emit(state.copyWith(isLoading: true, exception: null));

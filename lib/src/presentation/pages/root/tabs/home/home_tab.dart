@@ -290,9 +290,6 @@ class _RibbonSection extends StatelessWidget {
 
                 return CourseHorizontalCard(
                   course: course,
-                  onTap: () {
-                    // TODO: điều hướng tới chi tiết khoá học
-                  },
                 );
               },
             ),

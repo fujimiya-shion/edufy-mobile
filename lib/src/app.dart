@@ -33,6 +33,7 @@ class _EdufyAppState extends State<EdufyApp> {
           useMaterial3: true,
           colorSchemeSeed: Colors.blue,
           fontFamily: 'Inter',
+          scaffoldBackgroundColor: Colors.white,
         ),
 
         builder: (context, child) {

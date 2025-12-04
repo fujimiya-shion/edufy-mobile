@@ -5,6 +5,7 @@ class AppColors {
 
   // Brand
   static const Color primary = Color(0xFF2563EB); // blue
+  static const Color primaryLight = Color(0xFFDBEAFE); // light blue (50)
   static const Color secondary = Color(0xFF6366F1); // indigo
   static const Color accent = Color(0xFFF59E0B); // amber
 

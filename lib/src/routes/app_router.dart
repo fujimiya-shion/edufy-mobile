@@ -1,3 +1,4 @@
+import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/cart/cart_page.dart';
 // Checkout
 import 'package:edufy_mobile/src/presentation/pages/checkout/success/checkout_success_page.dart';
@@ -75,18 +76,29 @@ class AppRouter {
           GoRoute(
             path: AppRouter.courseDetail,
             builder: (context, state) {
-              // Ưu tiên lấy từ extra (int), fallback ?id=...
-              int id = 0;
               final extra = state.extra;
-              if (extra is int) {
-                id = extra;
-              } else {
-                id =
-                    int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 0;
+
+              if (extra is CourseModel) {
+                return CourseDetailPage(
+                  initialCourse: extra,
+                  courseId: extra.id,
+                );
               }
-              return CourseDetailPage(courseId: id);
+
+              if (extra is int) {
+                return CourseDetailPage(
+                  courseId: extra,
+                );
+              }
+
+              final id = int.tryParse(state.uri.queryParameters['id'] ?? '');
+
+              return CourseDetailPage(
+                courseId: id,
+              );
             },
           ),
+
 
           // ====== TEACHER ======
           GoRoute(
@@ -116,17 +128,27 @@ class AppRouter {
           GoRoute(
             path: AppRouter.trainingCenterDetail,
             builder: (context, state) {
-              int id = 0;
               final extra = state.extra;
-              if (extra is int) {
+
+              int? id;
+              TrainingCenterModel? center;
+
+              if (extra is TrainingCenterModel) {
+                center = extra;
+                id = extra.id;
+              } else if (extra is int) {
                 id = extra;
               } else {
-                id =
-                    int.tryParse(state.uri.queryParameters['id'] ?? '') ?? 0;
+                id = int.tryParse(state.uri.queryParameters['id'] ?? '');
               }
-              return TrainingCenterDetailPage(centerId: id);
+
+              return TrainingCenterDetailPage(
+                centerId: id,
+                initialCenter: center,
+              );
             },
           ),
+
 
           // ====== LESSON ======
           GoRoute(

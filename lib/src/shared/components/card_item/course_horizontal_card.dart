@@ -1,6 +1,8 @@
 import 'package:edufy_mobile/src/data/models/export.dart';
+import 'package:edufy_mobile/src/routes/app_router.dart';
 import 'package:edufy_mobile/src/shared/configs/export.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CourseHorizontalCard extends StatelessWidget {
   final CourseModel course;
@@ -55,7 +57,7 @@ class CourseHorizontalCard extends StatelessWidget {
         elevation: 0,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: onTap,
+          onTap: onTap ?? () => context.push(AppRouter.courseDetail, extra: course),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

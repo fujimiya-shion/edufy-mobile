@@ -21,6 +21,16 @@ abstract class _$TrainingCenterModelCWProxy {
 
   TrainingCenterModel website(String? website);
 
+  TrainingCenterModel avatar(String? avatar);
+
+  TrainingCenterModel coverImagePath(String? coverImagePath);
+
+  TrainingCenterModel description(String? description);
+
+  TrainingCenterModel rating(double? rating);
+
+  TrainingCenterModel reviewCount(int? reviewCount);
+
   TrainingCenterModel addressLine1(String? addressLine1);
 
   TrainingCenterModel addressLine2(String? addressLine2);
@@ -34,6 +44,8 @@ abstract class _$TrainingCenterModelCWProxy {
   TrainingCenterModel postalCode(String? postalCode);
 
   TrainingCenterModel timezone(String? timezone);
+
+  TrainingCenterModel courses(List<CourseModel> courses);
 
   TrainingCenterModel meta(Map<String, dynamic>? meta);
 
@@ -52,6 +64,11 @@ abstract class _$TrainingCenterModelCWProxy {
     String? email,
     String? phone,
     String? website,
+    String? avatar,
+    String? coverImagePath,
+    String? description,
+    double? rating,
+    int? reviewCount,
     String? addressLine1,
     String? addressLine2,
     String? city,
@@ -59,6 +76,7 @@ abstract class _$TrainingCenterModelCWProxy {
     String? country,
     String? postalCode,
     String? timezone,
+    List<CourseModel> courses,
     Map<String, dynamic>? meta,
   });
 }
@@ -92,6 +110,24 @@ class _$TrainingCenterModelCWProxyImpl implements _$TrainingCenterModelCWProxy {
   TrainingCenterModel website(String? website) => call(website: website);
 
   @override
+  TrainingCenterModel avatar(String? avatar) => call(avatar: avatar);
+
+  @override
+  TrainingCenterModel coverImagePath(String? coverImagePath) =>
+      call(coverImagePath: coverImagePath);
+
+  @override
+  TrainingCenterModel description(String? description) =>
+      call(description: description);
+
+  @override
+  TrainingCenterModel rating(double? rating) => call(rating: rating);
+
+  @override
+  TrainingCenterModel reviewCount(int? reviewCount) =>
+      call(reviewCount: reviewCount);
+
+  @override
   TrainingCenterModel addressLine1(String? addressLine1) =>
       call(addressLine1: addressLine1);
 
@@ -116,6 +152,10 @@ class _$TrainingCenterModelCWProxyImpl implements _$TrainingCenterModelCWProxy {
   TrainingCenterModel timezone(String? timezone) => call(timezone: timezone);
 
   @override
+  TrainingCenterModel courses(List<CourseModel> courses) =>
+      call(courses: courses);
+
+  @override
   TrainingCenterModel meta(Map<String, dynamic>? meta) => call(meta: meta);
 
   @override
@@ -134,6 +174,11 @@ class _$TrainingCenterModelCWProxyImpl implements _$TrainingCenterModelCWProxy {
     Object? email = const $CopyWithPlaceholder(),
     Object? phone = const $CopyWithPlaceholder(),
     Object? website = const $CopyWithPlaceholder(),
+    Object? avatar = const $CopyWithPlaceholder(),
+    Object? coverImagePath = const $CopyWithPlaceholder(),
+    Object? description = const $CopyWithPlaceholder(),
+    Object? rating = const $CopyWithPlaceholder(),
+    Object? reviewCount = const $CopyWithPlaceholder(),
     Object? addressLine1 = const $CopyWithPlaceholder(),
     Object? addressLine2 = const $CopyWithPlaceholder(),
     Object? city = const $CopyWithPlaceholder(),
@@ -141,6 +186,7 @@ class _$TrainingCenterModelCWProxyImpl implements _$TrainingCenterModelCWProxy {
     Object? country = const $CopyWithPlaceholder(),
     Object? postalCode = const $CopyWithPlaceholder(),
     Object? timezone = const $CopyWithPlaceholder(),
+    Object? courses = const $CopyWithPlaceholder(),
     Object? meta = const $CopyWithPlaceholder(),
   }) {
     return TrainingCenterModel(
@@ -172,6 +218,26 @@ class _$TrainingCenterModelCWProxyImpl implements _$TrainingCenterModelCWProxy {
           ? _value.website
           // ignore: cast_nullable_to_non_nullable
           : website as String?,
+      avatar: avatar == const $CopyWithPlaceholder()
+          ? _value.avatar
+          // ignore: cast_nullable_to_non_nullable
+          : avatar as String?,
+      coverImagePath: coverImagePath == const $CopyWithPlaceholder()
+          ? _value.coverImagePath
+          // ignore: cast_nullable_to_non_nullable
+          : coverImagePath as String?,
+      description: description == const $CopyWithPlaceholder()
+          ? _value.description
+          // ignore: cast_nullable_to_non_nullable
+          : description as String?,
+      rating: rating == const $CopyWithPlaceholder()
+          ? _value.rating
+          // ignore: cast_nullable_to_non_nullable
+          : rating as double?,
+      reviewCount: reviewCount == const $CopyWithPlaceholder()
+          ? _value.reviewCount
+          // ignore: cast_nullable_to_non_nullable
+          : reviewCount as int?,
       addressLine1: addressLine1 == const $CopyWithPlaceholder()
           ? _value.addressLine1
           // ignore: cast_nullable_to_non_nullable
@@ -200,6 +266,10 @@ class _$TrainingCenterModelCWProxyImpl implements _$TrainingCenterModelCWProxy {
           ? _value.timezone
           // ignore: cast_nullable_to_non_nullable
           : timezone as String?,
+      courses: courses == const $CopyWithPlaceholder() || courses == null
+          ? _value.courses
+          // ignore: cast_nullable_to_non_nullable
+          : courses as List<CourseModel>,
       meta: meta == const $CopyWithPlaceholder()
           ? _value.meta
           // ignore: cast_nullable_to_non_nullable
@@ -229,6 +299,11 @@ TrainingCenterModel _$TrainingCenterModelFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String?,
       phone: json['phone'] as String?,
       website: json['website'] as String?,
+      avatar: json['avatar'] as String?,
+      coverImagePath: json['cover_image_path'] as String?,
+      description: json['description'] as String?,
+      rating: (json['rating'] as num?)?.toDouble(),
+      reviewCount: (json['review_count'] as num?)?.toInt(),
       addressLine1: json['address_line1'] as String?,
       addressLine2: json['address_line2'] as String?,
       city: json['city'] as String?,
@@ -236,6 +311,11 @@ TrainingCenterModel _$TrainingCenterModelFromJson(Map<String, dynamic> json) =>
       country: json['country'] as String?,
       postalCode: json['postal_code'] as String?,
       timezone: json['timezone'] as String?,
+      courses:
+          (json['courses'] as List<dynamic>?)
+              ?.map((e) => CourseModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       meta: json['meta'] as Map<String, dynamic>?,
     );
 
@@ -249,6 +329,11 @@ Map<String, dynamic> _$TrainingCenterModelToJson(
   'email': instance.email,
   'phone': instance.phone,
   'website': instance.website,
+  'avatar': instance.avatar,
+  'cover_image_path': instance.coverImagePath,
+  'description': instance.description,
+  'rating': instance.rating,
+  'review_count': instance.reviewCount,
   'address_line1': instance.addressLine1,
   'address_line2': instance.addressLine2,
   'city': instance.city,
@@ -256,5 +341,6 @@ Map<String, dynamic> _$TrainingCenterModelToJson(
   'country': instance.country,
   'postal_code': instance.postalCode,
   'timezone': instance.timezone,
+  'courses': instance.courses,
   'meta': instance.meta,
 };

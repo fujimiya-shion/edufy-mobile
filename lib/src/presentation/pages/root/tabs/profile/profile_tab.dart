@@ -1,4 +1,3 @@
-import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
 import 'package:edufy_mobile/src/presentation/cubits/auth/auth_cubit.dart';
 import 'package:edufy_mobile/src/presentation/cubits/auth/auth_state.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/profile/profile_tab_cubit.dart';

@@ -1,5 +1,7 @@
 import 'package:edufy_mobile/src/data/models/course/course_model.dart';
+import 'package:edufy_mobile/src/routes/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../configs/export.dart';
 
@@ -37,7 +39,7 @@ class CourseListItem extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: onTap ?? () {
-          // TODO: điều hướng tới chi tiết khoá học
+          context.push(AppRouter.courseDetail, extra: course);
         },
         child: Padding(
           padding: const EdgeInsets.all(14),
