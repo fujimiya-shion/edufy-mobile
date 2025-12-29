@@ -1,4 +1,5 @@
 import 'package:edufy_mobile/src/data/models/export.dart';
+import 'package:edufy_mobile/src/presentation/pages/auth/email_input/email_input_page.dart';
 import 'package:edufy_mobile/src/presentation/pages/cart/cart_page.dart';
 // Checkout
 import 'package:edufy_mobile/src/presentation/pages/checkout/success/checkout_success_page.dart';
@@ -55,6 +56,8 @@ class AppRouter {
   // ====== CART & CHECKOUT ======
   static const String cartDetail = '/cart';
   static const String checkoutSuccess = '/checkout-success';
+
+  static const String emailInput = '/email-input';
 
   static GoRouter build() => GoRouter(
         initialLocation: AppRouter.splash,
@@ -216,6 +219,11 @@ class AppRouter {
             path: AppRouter.courseCheckout,
             builder: (context, state) => CourseCheckoutPage(course: state.extra as CourseModel),
           ),
+
+          GoRoute(
+            path: AppRouter.emailInput,
+            builder: (context, state) => const EmailInputPage(),
+          )
         ],
         errorBuilder: (context, state) => const NotfoundPage(),
       );

@@ -121,7 +121,7 @@ class _ButtonsSection extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: FilledButton(
-            onPressed: () {},
+            onPressed: () => context.push(AppRouter.emailInput),
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.primary,
               padding: const EdgeInsets.symmetric(vertical: 16),
