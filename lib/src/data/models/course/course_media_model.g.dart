@@ -7,7 +7,7 @@ part of 'course_media_model.dart';
 // **************************************************************************
 
 abstract class _$CourseMediaModelCWProxy {
-  CourseMediaModel id(int? id);
+  CourseMediaModel id(String? id);
 
   CourseMediaModel courseId(int? courseId);
 
@@ -19,8 +19,6 @@ abstract class _$CourseMediaModelCWProxy {
 
   CourseMediaModel sortOrder(int? sortOrder);
 
-  CourseMediaModel meta(Map<String, dynamic>? meta);
-
   /// Creates a new instance with the provided field values.
   /// Passing `null` to a nullable field nullifies it, while `null` for a non-nullable field is ignored. To update a single field use `CourseMediaModel(...).copyWith.fieldName(value)`.
   ///
@@ -29,13 +27,12 @@ abstract class _$CourseMediaModelCWProxy {
   /// CourseMediaModel(...).copyWith(id: 12, name: "My name")
   /// ```
   CourseMediaModel call({
-    int? id,
+    String? id,
     int? courseId,
     String? type,
     String? title,
     String? url,
     int? sortOrder,
-    Map<String, dynamic>? meta,
   });
 }
 
@@ -47,7 +44,7 @@ class _$CourseMediaModelCWProxyImpl implements _$CourseMediaModelCWProxy {
   final CourseMediaModel _value;
 
   @override
-  CourseMediaModel id(int? id) => call(id: id);
+  CourseMediaModel id(String? id) => call(id: id);
 
   @override
   CourseMediaModel courseId(int? courseId) => call(courseId: courseId);
@@ -65,9 +62,6 @@ class _$CourseMediaModelCWProxyImpl implements _$CourseMediaModelCWProxy {
   CourseMediaModel sortOrder(int? sortOrder) => call(sortOrder: sortOrder);
 
   @override
-  CourseMediaModel meta(Map<String, dynamic>? meta) => call(meta: meta);
-
-  @override
   /// Creates a new instance with the provided field values.
   /// Passing `null` to a nullable field nullifies it, while `null` for a non-nullable field is ignored. To update a single field use `CourseMediaModel(...).copyWith.fieldName(value)`.
   ///
@@ -82,13 +76,12 @@ class _$CourseMediaModelCWProxyImpl implements _$CourseMediaModelCWProxy {
     Object? title = const $CopyWithPlaceholder(),
     Object? url = const $CopyWithPlaceholder(),
     Object? sortOrder = const $CopyWithPlaceholder(),
-    Object? meta = const $CopyWithPlaceholder(),
   }) {
     return CourseMediaModel(
       id: id == const $CopyWithPlaceholder()
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
-          : id as int?,
+          : id as String?,
       courseId: courseId == const $CopyWithPlaceholder()
           ? _value.courseId
           // ignore: cast_nullable_to_non_nullable
@@ -109,10 +102,6 @@ class _$CourseMediaModelCWProxyImpl implements _$CourseMediaModelCWProxy {
           ? _value.sortOrder
           // ignore: cast_nullable_to_non_nullable
           : sortOrder as int?,
-      meta: meta == const $CopyWithPlaceholder()
-          ? _value.meta
-          // ignore: cast_nullable_to_non_nullable
-          : meta as Map<String, dynamic>?,
     );
   }
 }
@@ -130,13 +119,12 @@ extension $CourseMediaModelCopyWith on CourseMediaModel {
 
 CourseMediaModel _$CourseMediaModelFromJson(Map<String, dynamic> json) =>
     CourseMediaModel(
-      id: (json['id'] as num?)?.toInt(),
+      id: json['id'] as String?,
       courseId: (json['course_id'] as num?)?.toInt(),
       type: json['type'] as String?,
       title: json['title'] as String?,
       url: json['url'] as String?,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
-      meta: json['meta'] as Map<String, dynamic>?,
     );
 
 Map<String, dynamic> _$CourseMediaModelToJson(CourseMediaModel instance) =>
@@ -147,5 +135,4 @@ Map<String, dynamic> _$CourseMediaModelToJson(CourseMediaModel instance) =>
       'title': instance.title,
       'url': instance.url,
       'sort_order': instance.sortOrder,
-      'meta': instance.meta,
     };

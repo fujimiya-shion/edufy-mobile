@@ -7,7 +7,7 @@ part 'course_media_model.g.dart';
 @CopyWith()
 @JsonSerializable()
 class CourseMediaModel {
-  final int? id;
+  final String? id;
 
   @JsonKey(name: 'course_id')
   final int? courseId;
@@ -20,7 +20,7 @@ class CourseMediaModel {
   @JsonKey(name: 'sort_order')
   final int? sortOrder;
 
-  final Map<String, dynamic>? meta;
+  // final Map<String, dynamic>? meta;
 
   const CourseMediaModel({
     this.id,
@@ -29,7 +29,7 @@ class CourseMediaModel {
     this.title,
     this.url,
     this.sortOrder,
-    this.meta,
+    // this.meta,
   });
 
   factory CourseMediaModel.fromJson(Map<String, dynamic> json) =>

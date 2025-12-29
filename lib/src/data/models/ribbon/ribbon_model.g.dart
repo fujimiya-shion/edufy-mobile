@@ -15,7 +15,7 @@ abstract class _$RibbonModelCWProxy {
 
   RibbonModel description(String? description);
 
-  RibbonModel status(String? status);
+  RibbonModel status(int? status);
 
   RibbonModel order(int? order);
 
@@ -33,7 +33,7 @@ abstract class _$RibbonModelCWProxy {
     String? title,
     String? slug,
     String? description,
-    String? status,
+    int? status,
     int? order,
     List<RibbonItemModel>? items,
   });
@@ -60,7 +60,7 @@ class _$RibbonModelCWProxyImpl implements _$RibbonModelCWProxy {
       call(description: description);
 
   @override
-  RibbonModel status(String? status) => call(status: status);
+  RibbonModel status(int? status) => call(status: status);
 
   @override
   RibbonModel order(int? order) => call(order: order);
@@ -105,7 +105,7 @@ class _$RibbonModelCWProxyImpl implements _$RibbonModelCWProxy {
       status: status == const $CopyWithPlaceholder()
           ? _value.status
           // ignore: cast_nullable_to_non_nullable
-          : status as String?,
+          : status as int?,
       order: order == const $CopyWithPlaceholder()
           ? _value.order
           // ignore: cast_nullable_to_non_nullable
@@ -131,12 +131,12 @@ extension $RibbonModelCopyWith on RibbonModel {
 
 RibbonModel _$RibbonModelFromJson(Map<String, dynamic> json) => RibbonModel(
   id: (json['id'] as num?)?.toInt(),
-  title: json['title'] as String?,
-  slug: json['slug'] as String?,
-  description: json['description'] as String?,
-  status: json['status'] as String?,
+  title: _asNullableString(json['title']),
+  slug: _asNullableString(json['slug']),
+  description: _asNullableString(json['description']),
+  status: (json['status'] as num?)?.toInt(),
   order: (json['order'] as num?)?.toInt(),
-  items: (json['items'] as List<dynamic>?)
+  items: (json['active_items'] as List<dynamic>?)
       ?.map((e) => RibbonItemModel.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
@@ -149,5 +149,5 @@ Map<String, dynamic> _$RibbonModelToJson(RibbonModel instance) =>
       'description': instance.description,
       'status': instance.status,
       'order': instance.order,
-      'items': instance.items?.map((e) => e.toJson()).toList(),
+      'active_items': instance.items?.map((e) => e.toJson()).toList(),
     };

@@ -38,7 +38,7 @@ class MockRibbonRepository implements IRibbonRepository {
       id: 1,
       title: 'Khoá đề xuất cho bạn',
       slug: 'recommended',
-      status: 'active',
+      status: 1,
       order: 1,
       items: [
         RibbonItemModel(id: 11, ribbonId: 1, courseId: 1, order: 1, course: course1),
@@ -50,7 +50,7 @@ class MockRibbonRepository implements IRibbonRepository {
       id: 2,
       title: 'Sắp khai giảng',
       slug: 'coming-soon',
-      status: 'active',
+      status: 1,
       order: 2,
       items: [
         RibbonItemModel(id: 21, ribbonId: 2, courseId: 1, order: 1, course: course1),

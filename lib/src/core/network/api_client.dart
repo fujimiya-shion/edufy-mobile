@@ -13,6 +13,7 @@ class ApiClient {
     // interceptors.add(AuthInterceptor(_dio));
 
     _dio.options = BaseOptions(
+      baseUrl: 'http://192.168.100.154:8888',
       headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 15),

@@ -8,6 +8,18 @@ import 'lesson_media_model.dart';
 
 part 'lesson_model.g.dart';
 
+LessonStatus? lessonStatusFromJson(dynamic status) {
+  if(status == null) return null;
+
+  final s = status.toString().toLowerCase();
+  switch (s) {
+    case '0': return LessonStatus.draft;
+    case '1': return LessonStatus.published;
+    case '2': return LessonStatus.locked;
+    default: return null;
+  }
+}
+
 @CopyWith()
 @JsonSerializable(explicitToJson: true)
 class LessonModel {
@@ -23,6 +35,7 @@ class LessonModel {
   @JsonKey(name: 'sort_order')
   final int? sortOrder;
 
+  @JsonKey(name: 'status', fromJson: lessonStatusFromJson)
   final LessonStatus? status;
 
   final CourseModel? course;

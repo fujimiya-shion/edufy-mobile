@@ -157,7 +157,7 @@ LessonModel _$LessonModelFromJson(Map<String, dynamic> json) => LessonModel(
   slug: json['slug'] as String?,
   summary: json['summary'] as String?,
   sortOrder: (json['sort_order'] as num?)?.toInt(),
-  status: $enumDecodeNullable(_$LessonStatusEnumMap, json['status']),
+  status: lessonStatusFromJson(json['status']),
   course: json['course'] == null
       ? null
       : CourseModel.fromJson(json['course'] as Map<String, dynamic>),

@@ -22,7 +22,7 @@ class CourseRepository extends BaseRepository implements ICourseRepository {
   @override
   Future<ApiResult<ObjectResponse<CourseModel>, ApiException>> getDetail(int id) async {
     return get(
-      endpoint: '/courses/$id',
+      endpoint: AppEndpoints.courseDetail(id),
       fromMap: (json) => ObjectResponse<CourseModel>.fromJson(json, CourseModel.fromJson),
     );
   }

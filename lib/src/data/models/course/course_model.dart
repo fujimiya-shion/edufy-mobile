@@ -11,6 +11,44 @@ import 'course_media_model.dart';
 
 part 'course_model.g.dart';
 
+CourseStatus? courseStatusFromJson(dynamic v) {
+  if (v == null) return null;
+
+  final s = v.toString().toLowerCase();
+  switch (s) {
+    case '0': return CourseStatus.draft;
+    case '1': return CourseStatus.archived;
+    case '2': return CourseStatus.published;
+    default: return null;
+  }
+}
+
+CourseLevel? courseLevelFromJson(dynamic v) {
+  if (v == null) return null;
+
+  // int mapping
+  if (v is num) {
+    switch (v.toInt()) {
+      case 0: return CourseLevel.beginner;
+      case 1: return CourseLevel.intermediate;
+      case 2: return CourseLevel.advanced;
+      default: return null;
+    }
+  }
+
+  // string mapping
+  final s = v.toString().toLowerCase();
+  switch (s) {
+    case 'beginner': return CourseLevel.beginner;
+    case 'intermediate': return CourseLevel.intermediate;
+    case 'advanced': return CourseLevel.advanced;
+    default: return null;
+  }
+}
+
+dynamic courseLevelToJson(CourseLevel? v) => v?.name; // hoặc theo BE cần
+
+
 @CopyWith()
 @JsonSerializable(explicitToJson: true)
 class CourseModel {
@@ -28,7 +66,9 @@ class CourseModel {
 
   final String? description;
 
+  @JsonKey(fromJson: courseLevelFromJson)
   final CourseLevel? level;
+  @JsonKey(fromJson: courseStatusFromJson)
   final CourseStatus? status;
 
   @JsonKey(name: 'duration_hours')

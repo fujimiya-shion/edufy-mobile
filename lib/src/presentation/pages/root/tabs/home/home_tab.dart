@@ -23,7 +23,7 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     return BlocProvider<HomeCubit>(
       create: (_) => HomeCubit(
-        ribbonRepository: getIt<IRibbonRepository>(),
+        ribbonRepository: getIt<IRibbonRepository>(instanceName: InstanceNames.persistent.name),
         bannerRepository: getIt<IBannerRepository>(),
       )..initial(),
       child: BlocConsumer<HomeCubit, HomeState>(
