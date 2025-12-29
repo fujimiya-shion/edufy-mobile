@@ -1,5 +1,6 @@
 import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
 import 'package:edufy_mobile/src/data/dtos/common/export.dart';
+import 'package:edufy_mobile/src/data/dtos/course/course_dto.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/data/repositories/base_repository.dart';
 import 'package:edufy_mobile/src/data/repositories/course/i_course_repository.dart';
@@ -24,6 +25,15 @@ class CourseRepository extends BaseRepository implements ICourseRepository {
     return get(
       endpoint: AppEndpoints.courseDetail(id),
       fromMap: (json) => ObjectResponse<CourseModel>.fromJson(json, CourseModel.fromJson),
+    );
+  }
+
+  @override
+  Future<ApiResult<PaginationResponse<CourseModel>, ApiException>> filter({CourseFilterRequest request = const CourseFilterRequest(page: 1, perPage: 15)}) {
+    return get(
+      endpoint: AppEndpoints.coursesFilter,
+      parameters: request.toQuery(),
+      fromMap: (json) => PaginationResponse<CourseModel>.fromJson(json, CourseModel.fromJson),
     );
   }
 }

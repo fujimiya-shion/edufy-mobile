@@ -10,6 +10,7 @@ class AppEndpoints {
   // ===== COURSE =====
   static const String courses = '$apiPrefix/courses';
   static String courseDetail(int id) => '$courses/$id';
+  static const String coursesFilter = '$courses/filter';
 
   // ===== TEACHER =====
   static const String teachers = '$apiPrefix/teachers';

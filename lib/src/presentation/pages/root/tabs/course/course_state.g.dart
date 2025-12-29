@@ -19,6 +19,8 @@ abstract class _$CourseStateCWProxy {
 
   CourseState keyword(String keyword);
 
+  CourseState filterRequest(CourseFilterRequest filterRequest);
+
   CourseState exception(ApiException? exception);
 
   /// Creates a new instance with the provided field values.
@@ -35,6 +37,7 @@ abstract class _$CourseStateCWProxy {
     int page,
     int pageCount,
     String keyword,
+    CourseFilterRequest filterRequest,
     ApiException? exception,
   });
 }
@@ -66,6 +69,10 @@ class _$CourseStateCWProxyImpl implements _$CourseStateCWProxy {
   CourseState keyword(String keyword) => call(keyword: keyword);
 
   @override
+  CourseState filterRequest(CourseFilterRequest filterRequest) =>
+      call(filterRequest: filterRequest);
+
+  @override
   CourseState exception(ApiException? exception) => call(exception: exception);
 
   @override
@@ -83,6 +90,7 @@ class _$CourseStateCWProxyImpl implements _$CourseStateCWProxy {
     Object? page = const $CopyWithPlaceholder(),
     Object? pageCount = const $CopyWithPlaceholder(),
     Object? keyword = const $CopyWithPlaceholder(),
+    Object? filterRequest = const $CopyWithPlaceholder(),
     Object? exception = const $CopyWithPlaceholder(),
   }) {
     return CourseState(
@@ -111,6 +119,11 @@ class _$CourseStateCWProxyImpl implements _$CourseStateCWProxy {
           ? _value.keyword
           // ignore: cast_nullable_to_non_nullable
           : keyword as String,
+      filterRequest:
+          filterRequest == const $CopyWithPlaceholder() || filterRequest == null
+          ? _value.filterRequest
+          // ignore: cast_nullable_to_non_nullable
+          : filterRequest as CourseFilterRequest,
       exception: exception == const $CopyWithPlaceholder()
           ? _value.exception
           // ignore: cast_nullable_to_non_nullable

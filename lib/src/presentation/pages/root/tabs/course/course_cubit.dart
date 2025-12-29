@@ -1,4 +1,4 @@
-// lib/src/presentation/pages/root/tabs/course/course_cubit.dart
+import 'package:edufy_mobile/src/data/dtos/course/course_dto.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/data/repositories/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/course/course_state.dart';
@@ -21,10 +21,12 @@ class CourseCubit extends Cubit<CourseState> {
       ),
     );
 
-    final result = await courseRepository.index(
+    final req = state.filterRequest.copyWith(
+      keyword: state.keyword,
       page: 1,
-      keyword: state.keyword.isEmpty ? null : state.keyword,
     );
+
+    final result = await courseRepository.filter(request: req);
 
     final exception = result.exception;
     final response = result.response;
@@ -37,6 +39,7 @@ class CourseCubit extends Cubit<CourseState> {
           courses: const <CourseModel>[],
           page: 1,
           pageCount: 1,
+          filterRequest: req,
         ),
       );
       return;
@@ -53,6 +56,7 @@ class CourseCubit extends Cubit<CourseState> {
         page: page,
         pageCount: pageCount,
         exception: null,
+        filterRequest: req.copyWith(page: page),
       ),
     );
   }
@@ -73,10 +77,12 @@ class CourseCubit extends Cubit<CourseState> {
       ),
     );
 
-    final result = await courseRepository.index(
+    final req = state.filterRequest.copyWith(
+      keyword: state.keyword,
       page: nextPage,
-      keyword: state.keyword.isEmpty ? null : state.keyword,
     );
+
+    final result = await courseRepository.filter(request: req);
 
     final exception = result.exception;
     final response = result.response;
@@ -102,6 +108,7 @@ class CourseCubit extends Cubit<CourseState> {
         page: page,
         pageCount: pageCount,
         exception: null,
+        filterRequest: req.copyWith(page: page),
       ),
     );
   }
@@ -112,9 +119,40 @@ class CourseCubit extends Cubit<CourseState> {
     emit(
       state.copyWith(
         keyword: keyword,
+        filterRequest: state.filterRequest.copyWith(keyword: keyword).resetPage(),
       ),
     );
 
+    await initial();
+  }
+
+  Future<void> setSort(String? sort) async {
+    emit(
+      state.copyWith(
+        filterRequest: state.filterRequest.copyWith(sort: sort).resetPage(),
+      ),
+    );
+    await initial();
+  }
+
+  Future<void> setFeeRange({double? minFee, double? maxFee}) async {
+    emit(
+      state.copyWith(
+        filterRequest: state.filterRequest
+            .copyWith(minFee: minFee, maxFee: maxFee)
+            .resetPage(),
+      ),
+    );
+    await initial();
+  }
+
+  Future<void> resetFilters() async {
+    final req = CourseFilterRequest(
+      page: 1,
+      perPage: state.filterRequest.perPage,
+      keyword: state.keyword,
+    );
+    emit(state.copyWith(filterRequest: req));
     await initial();
   }
 }

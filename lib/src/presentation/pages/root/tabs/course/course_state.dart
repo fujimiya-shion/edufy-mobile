@@ -1,6 +1,6 @@
-// lib/src/presentation/pages/root/tabs/course/course_state.dart
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
+import 'package:edufy_mobile/src/data/dtos/course/course_dto.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:equatable/equatable.dart';
 
@@ -14,6 +14,7 @@ class CourseState extends Equatable {
   final int page;
   final int pageCount;
   final String keyword;
+  final CourseFilterRequest filterRequest;
   final ApiException? exception;
 
   const CourseState({
@@ -23,6 +24,7 @@ class CourseState extends Equatable {
     this.page = 1,
     this.pageCount = 1,
     this.keyword = '',
+    this.filterRequest = const CourseFilterRequest(page: 1, perPage: 15),
     this.exception,
   });
 
@@ -34,6 +36,7 @@ class CourseState extends Equatable {
         page,
         pageCount,
         keyword,
+        filterRequest,
         exception,
       ];
 }
