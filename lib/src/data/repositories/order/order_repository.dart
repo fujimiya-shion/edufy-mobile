@@ -1,6 +1,7 @@
 import 'package:edufy_mobile/src/core/network/api_client.dart';
 import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
 import 'package:edufy_mobile/src/data/dtos/common/export.dart';
+import 'package:edufy_mobile/src/data/dtos/transaction/transaction_dto.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/data/repositories/base_repository.dart';
 import 'package:edufy_mobile/src/shared/configs/app_endpoints.dart';
@@ -13,16 +14,14 @@ class OrderRepository extends BaseRepository implements IOrderRepository {
 
   @override
   Future<ApiResult<ObjectResponse<OrderModel>, ApiException>> checkout({
-    required int cartId,
-    String? paymentMethod,
-    String? note,
+    required OrderCheckoutRequest request,
   }) {
     return post(
       endpoint: AppEndpoints.ordersCheckout,
       data: {
-        'cart_id': cartId,
-        if (paymentMethod != null) 'payment_method': paymentMethod,
-        if (note != null) 'note': note,
+        'cart_id': request.cartId,
+        if (request.paymentMethod != null) 'payment_method': request.paymentMethod,
+        if (request.note != null) 'note': request.note,
       },
       fromMap: (json) =>
           ObjectResponse<OrderModel>.fromJson(json, OrderModel.fromJson),

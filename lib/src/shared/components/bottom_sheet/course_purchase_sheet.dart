@@ -1,7 +1,9 @@
 import 'package:edufy_mobile/src/data/models/course/course_model.dart';
+import 'package:edufy_mobile/src/routes/app_router.dart';
 import 'package:edufy_mobile/src/shared/configs/export.dart';
 import 'package:edufy_mobile/src/shared/utils/app_formatters.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 Future<void> showCoursePurchaseSheet(
   BuildContext context,
@@ -100,7 +102,7 @@ Future<void> showCoursePurchaseSheet(
                 height: 48,
                 child: FilledButton(
                   onPressed: () {
-                    // TODO: chuyển sang flow thanh toán / thêm vào giỏ
+                    context.push(AppRouter.courseCheckout, extra: course);
                     Navigator.of(context).pop();
                   },
                   child: const Text('Xác nhận mua khoá học'),

@@ -1,4 +1,5 @@
 import 'package:edufy_mobile/src/data/dtos/common/export.dart';
+import 'package:edufy_mobile/src/data/dtos/transaction/transaction_dto.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/shared/types/api_result.dart';
 import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
@@ -10,9 +11,7 @@ class MockOrderRepository implements IOrderRepository {
 
   @override
   Future<ApiResult<ObjectResponse<OrderModel>, ApiException>> checkout({
-    required int cartId,
-    String? paymentMethod,
-    String? note,
+    required OrderCheckoutRequest request,
   }) async {
     await Future.delayed(const Duration(milliseconds: 250));
 
@@ -21,10 +20,10 @@ class MockOrderRepository implements IOrderRepository {
       orderNumber: 'EDU-${DateTime.now().millisecondsSinceEpoch}',
       status: 'pending',
       paymentStatus: 'unpaid',
-      cartId: cartId,
+      cartId: request.cartId,
       total: 3500000,
       subtotal: 3500000,
-      note: note,
+      note: request.note,
     );
 
     _orders.add(order);

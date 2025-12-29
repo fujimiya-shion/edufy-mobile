@@ -2,6 +2,7 @@ import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/cart/cart_page.dart';
 // Checkout
 import 'package:edufy_mobile/src/presentation/pages/checkout/success/checkout_success_page.dart';
+import 'package:edufy_mobile/src/presentation/pages/course/checkout/course_checkout_page.dart';
 import 'package:edufy_mobile/src/presentation/pages/course/detail/course_detail_page.dart';
 // Course
 import 'package:edufy_mobile/src/presentation/pages/course/listing/course_listing_page.dart';
@@ -34,7 +35,7 @@ class AppRouter {
   // ====== COURSE ======
   static const String courseListing = '/courses';
   static const String courseDetail = '/courses/detail';
-
+  static const String courseCheckout = '/courses/checkout';
   // ====== TEACHER ======
   static const String teacherListing = '/teachers';
   static const String teacherDetail = '/teachers/detail';
@@ -209,6 +210,11 @@ class AppRouter {
           GoRoute(
             path: AppRouter.onboarding,
             builder: (context, state) => const OnboardingPage(),
+          ),
+
+          GoRoute(
+            path: AppRouter.courseCheckout,
+            builder: (context, state) => CourseCheckoutPage(course: state.extra as CourseModel),
           ),
         ],
         errorBuilder: (context, state) => const NotfoundPage(),

@@ -9,19 +9,11 @@ part of 'course_dto.dart';
 abstract class _$CourseFilterRequestCWProxy {
   CourseFilterRequest keyword(String keyword);
 
-  CourseFilterRequest trainingCenterId(int? trainingCenterId);
-
   CourseFilterRequest level(String? level);
-
-  CourseFilterRequest status(String? status);
 
   CourseFilterRequest minFee(double? minFee);
 
   CourseFilterRequest maxFee(double? maxFee);
-
-  CourseFilterRequest teacherId(int? teacherId);
-
-  CourseFilterRequest hasMedia(bool? hasMedia);
 
   CourseFilterRequest sort(String? sort);
 
@@ -38,13 +30,9 @@ abstract class _$CourseFilterRequestCWProxy {
   /// ```
   CourseFilterRequest call({
     String keyword,
-    int? trainingCenterId,
     String? level,
-    String? status,
     double? minFee,
     double? maxFee,
-    int? teacherId,
-    bool? hasMedia,
     String? sort,
     int page,
     int perPage,
@@ -62,26 +50,13 @@ class _$CourseFilterRequestCWProxyImpl implements _$CourseFilterRequestCWProxy {
   CourseFilterRequest keyword(String keyword) => call(keyword: keyword);
 
   @override
-  CourseFilterRequest trainingCenterId(int? trainingCenterId) =>
-      call(trainingCenterId: trainingCenterId);
-
-  @override
   CourseFilterRequest level(String? level) => call(level: level);
-
-  @override
-  CourseFilterRequest status(String? status) => call(status: status);
 
   @override
   CourseFilterRequest minFee(double? minFee) => call(minFee: minFee);
 
   @override
   CourseFilterRequest maxFee(double? maxFee) => call(maxFee: maxFee);
-
-  @override
-  CourseFilterRequest teacherId(int? teacherId) => call(teacherId: teacherId);
-
-  @override
-  CourseFilterRequest hasMedia(bool? hasMedia) => call(hasMedia: hasMedia);
 
   @override
   CourseFilterRequest sort(String? sort) => call(sort: sort);
@@ -102,13 +77,9 @@ class _$CourseFilterRequestCWProxyImpl implements _$CourseFilterRequestCWProxy {
   /// ```
   CourseFilterRequest call({
     Object? keyword = const $CopyWithPlaceholder(),
-    Object? trainingCenterId = const $CopyWithPlaceholder(),
     Object? level = const $CopyWithPlaceholder(),
-    Object? status = const $CopyWithPlaceholder(),
     Object? minFee = const $CopyWithPlaceholder(),
     Object? maxFee = const $CopyWithPlaceholder(),
-    Object? teacherId = const $CopyWithPlaceholder(),
-    Object? hasMedia = const $CopyWithPlaceholder(),
     Object? sort = const $CopyWithPlaceholder(),
     Object? page = const $CopyWithPlaceholder(),
     Object? perPage = const $CopyWithPlaceholder(),
@@ -118,18 +89,10 @@ class _$CourseFilterRequestCWProxyImpl implements _$CourseFilterRequestCWProxy {
           ? _value.keyword
           // ignore: cast_nullable_to_non_nullable
           : keyword as String,
-      trainingCenterId: trainingCenterId == const $CopyWithPlaceholder()
-          ? _value.trainingCenterId
-          // ignore: cast_nullable_to_non_nullable
-          : trainingCenterId as int?,
       level: level == const $CopyWithPlaceholder()
           ? _value.level
           // ignore: cast_nullable_to_non_nullable
           : level as String?,
-      status: status == const $CopyWithPlaceholder()
-          ? _value.status
-          // ignore: cast_nullable_to_non_nullable
-          : status as String?,
       minFee: minFee == const $CopyWithPlaceholder()
           ? _value.minFee
           // ignore: cast_nullable_to_non_nullable
@@ -138,14 +101,6 @@ class _$CourseFilterRequestCWProxyImpl implements _$CourseFilterRequestCWProxy {
           ? _value.maxFee
           // ignore: cast_nullable_to_non_nullable
           : maxFee as double?,
-      teacherId: teacherId == const $CopyWithPlaceholder()
-          ? _value.teacherId
-          // ignore: cast_nullable_to_non_nullable
-          : teacherId as int?,
-      hasMedia: hasMedia == const $CopyWithPlaceholder()
-          ? _value.hasMedia
-          // ignore: cast_nullable_to_non_nullable
-          : hasMedia as bool?,
       sort: sort == const $CopyWithPlaceholder()
           ? _value.sort
           // ignore: cast_nullable_to_non_nullable
