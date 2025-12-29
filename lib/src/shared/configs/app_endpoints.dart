@@ -1,12 +1,6 @@
 class AppEndpoints {
   static const String apiPrefix = '/api/v1';
 
-  // ===== AUTH =====
-  static const String auth = '$apiPrefix/auth';
-  static const String login = '$auth/login';
-  static const String register = '$auth/register';
-  static const String me = '$auth/me';
-
   // ===== COURSE =====
   static const String courses = '$apiPrefix/courses';
   static String courseDetail(int id) => '$courses/$id';
@@ -56,4 +50,18 @@ class AppEndpoints {
 
   // ===== BANNER =====
   static const String banners = '$apiPrefix/banners';
+
+  // User Auth
+  static const auth = '$apiPrefix/auth';
+  static const userAuth = '$auth/user';
+  static const register = '$userAuth/register';
+  static const login = '$userAuth/login';
+  static const forgotPassword = '$userAuth/forgot-password';
+  static const resetPassword = '$userAuth/reset-password';
+  static const me = '$userAuth/me';
+  static const checkEmailExist = '$userAuth/email-exist';
+  static const checkPhoneExist = '$userAuth/phone-exist';
+  static const role = '$userAuth/role';
+  static String loginSocial(String provider) => '$userAuth/$provider';
+  static const deleteAccount = '$apiPrefix/users/me/delete-account';
 }

@@ -186,7 +186,7 @@ class Ioc {
       instanceName: InstanceNames.mock.name,
     );
     getIt.registerLazySingleton<IAuthRepository>(
-      () => const MockAuthRepository(),
+      () => AuthRepository(dio: getIt.get()),
     );
 
     // --- Banner ---
