@@ -1,9 +1,11 @@
 import 'package:edufy_mobile/src/presentation/cubits/auth/auth_cubit.dart';
 import 'package:edufy_mobile/src/presentation/cubits/auth/auth_state.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/profile/profile_tab_cubit.dart';
+import 'package:edufy_mobile/src/routes/app_router.dart';
 import 'package:edufy_mobile/src/shared/configs/export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -76,7 +78,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton(
-                        onPressed: () {},
+                        onPressed: () => context.push(AppRouter.emailInput),
                         style: FilledButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           padding: const EdgeInsets.symmetric(vertical: 14),

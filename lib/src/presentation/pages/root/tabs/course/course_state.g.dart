@@ -17,8 +17,6 @@ abstract class _$CourseStateCWProxy {
 
   CourseState pageCount(int pageCount);
 
-  CourseState keyword(String keyword);
-
   CourseState filterRequest(CourseFilterRequest filterRequest);
 
   CourseState exception(ApiException? exception);
@@ -36,7 +34,6 @@ abstract class _$CourseStateCWProxy {
     List<CourseModel> courses,
     int page,
     int pageCount,
-    String keyword,
     CourseFilterRequest filterRequest,
     ApiException? exception,
   });
@@ -66,9 +63,6 @@ class _$CourseStateCWProxyImpl implements _$CourseStateCWProxy {
   CourseState pageCount(int pageCount) => call(pageCount: pageCount);
 
   @override
-  CourseState keyword(String keyword) => call(keyword: keyword);
-
-  @override
   CourseState filterRequest(CourseFilterRequest filterRequest) =>
       call(filterRequest: filterRequest);
 
@@ -89,7 +83,6 @@ class _$CourseStateCWProxyImpl implements _$CourseStateCWProxy {
     Object? courses = const $CopyWithPlaceholder(),
     Object? page = const $CopyWithPlaceholder(),
     Object? pageCount = const $CopyWithPlaceholder(),
-    Object? keyword = const $CopyWithPlaceholder(),
     Object? filterRequest = const $CopyWithPlaceholder(),
     Object? exception = const $CopyWithPlaceholder(),
   }) {
@@ -115,10 +108,6 @@ class _$CourseStateCWProxyImpl implements _$CourseStateCWProxy {
           ? _value.pageCount
           // ignore: cast_nullable_to_non_nullable
           : pageCount as int,
-      keyword: keyword == const $CopyWithPlaceholder() || keyword == null
-          ? _value.keyword
-          // ignore: cast_nullable_to_non_nullable
-          : keyword as String,
       filterRequest:
           filterRequest == const $CopyWithPlaceholder() || filterRequest == null
           ? _value.filterRequest

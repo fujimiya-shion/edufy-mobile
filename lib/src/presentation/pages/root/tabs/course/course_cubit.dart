@@ -1,3 +1,4 @@
+// lib/src/presentation/pages/root/tabs/course/course_cubit.dart
 import 'package:edufy_mobile/src/data/dtos/course/course_dto.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/data/repositories/export.dart';
@@ -12,18 +13,16 @@ class CourseCubit extends Cubit<CourseState> {
   Future<void> initial() async {
     if (state.isLoading) return;
 
+    final req = state.filterRequest.copyWith(page: 1);
+
     emit(
       state.copyWith(
         isLoading: true,
         exception: null,
         page: 1,
         pageCount: 1,
+        filterRequest: req,
       ),
-    );
-
-    final req = state.filterRequest.copyWith(
-      keyword: state.keyword,
-      page: 1,
     );
 
     final result = await courseRepository.filter(request: req);
@@ -39,7 +38,6 @@ class CourseCubit extends Cubit<CourseState> {
           courses: const <CourseModel>[],
           page: 1,
           pageCount: 1,
-          filterRequest: req,
         ),
       );
       return;
@@ -77,10 +75,7 @@ class CourseCubit extends Cubit<CourseState> {
       ),
     );
 
-    final req = state.filterRequest.copyWith(
-      keyword: state.keyword,
-      page: nextPage,
-    );
+    final req = state.filterRequest.copyWith(page: nextPage);
 
     final result = await courseRepository.filter(request: req);
 
@@ -114,12 +109,13 @@ class CourseCubit extends Cubit<CourseState> {
   }
 
   Future<void> search(String keyword) async {
-    if (keyword == state.keyword) return;
+    final kw = keyword.trim();
+    if (kw == state.filterRequest.keyword.trim()) return;
 
     emit(
       state.copyWith(
-        keyword: keyword,
-        filterRequest: state.filterRequest.copyWith(keyword: keyword).resetPage(),
+        filterRequest: state.filterRequest.copyWith(keyword: kw).resetPage(),
+        exception: null,
       ),
     );
 
@@ -127,9 +123,22 @@ class CourseCubit extends Cubit<CourseState> {
   }
 
   Future<void> setSort(String? sort) async {
+    final s = sort?.trim();
     emit(
       state.copyWith(
-        filterRequest: state.filterRequest.copyWith(sort: sort).resetPage(),
+        filterRequest: state.filterRequest.copyWith(sort: (s == null || s.isEmpty) ? null : s).resetPage(),
+        exception: null,
+      ),
+    );
+    await initial();
+  }
+
+  Future<void> setLevel(String? level) async {
+    final lv = level?.trim();
+    emit(
+      state.copyWith(
+        filterRequest: state.filterRequest.copyWith(level: (lv == null || lv.isEmpty) ? null : lv).resetPage(),
+        exception: null,
       ),
     );
     await initial();
@@ -138,21 +147,53 @@ class CourseCubit extends Cubit<CourseState> {
   Future<void> setFeeRange({double? minFee, double? maxFee}) async {
     emit(
       state.copyWith(
-        filterRequest: state.filterRequest
-            .copyWith(minFee: minFee, maxFee: maxFee)
-            .resetPage(),
+        filterRequest: state.filterRequest.copyWith(minFee: minFee, maxFee: maxFee).resetPage(),
+        exception: null,
       ),
     );
     await initial();
   }
 
-  Future<void> resetFilters() async {
+  Future<void> clearKeyword() async {
+    emit(
+      state.copyWith(
+        filterRequest: state.filterRequest.copyWith(keyword: '').resetPage(),
+        exception: null,
+      ),
+    );
+    await initial();
+  }
+
+  Future<void> resetAllFilters() async {
     final req = CourseFilterRequest(
       page: 1,
       perPage: state.filterRequest.perPage,
-      keyword: state.keyword,
     );
-    emit(state.copyWith(filterRequest: req));
+
+    emit(
+      state.copyWith(
+        filterRequest: req,
+        exception: null,
+      ),
+    );
+
+    await initial();
+  }
+
+  Future<void> resetFilterOnly() async {
+    final req = CourseFilterRequest(
+      page: 1,
+      perPage: state.filterRequest.perPage,
+      keyword: state.filterRequest.keyword,
+    );
+
+    emit(
+      state.copyWith(
+        filterRequest: req,
+        exception: null,
+      ),
+    );
+
     await initial();
   }
 }

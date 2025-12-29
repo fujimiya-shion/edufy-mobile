@@ -1,3 +1,4 @@
+// lib/src/presentation/pages/root/tabs/course/course_tab.dart
 import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
 import 'package:edufy_mobile/src/data/repositories/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/course/course_cubit.dart';
@@ -24,6 +25,18 @@ class _CourseTabState extends State<CourseTab> {
     super.dispose();
   }
 
+  String _formatMoney(double v) {
+    final n = v.round();
+    final s = n.toString();
+    final buf = StringBuffer();
+    for (int i = 0; i < s.length; i++) {
+      final idxFromEnd = s.length - i;
+      buf.write(s[i]);
+      if (idxFromEnd > 1 && idxFromEnd % 3 == 1) buf.write('.');
+    }
+    return '${buf.toString()}₫';
+  }
+
   void _showSortSheet(BuildContext context) {
     final cubit = context.read<CourseCubit>();
     final currentSort = context.read<CourseCubit>().state.filterRequest.sort;
@@ -43,44 +56,54 @@ class _CourseTabState extends State<CourseTab> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Sắp xếp theo giá',
+                'Sắp xếp',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w800,
                       color: AppColors.textPrimary,
                     ),
               ),
               const SizedBox(height: 12),
-              _RadioTile(
+              _OptionTile(
                 title: 'Giá tăng dần',
-                value: 'fee_asc',
-                groupValue: currentSort,
-                onChanged: (v) async {
+                subtitle: 'Khoá học rẻ trước',
+                selected: currentSort == 'fee_asc',
+                icon: Icons.trending_up_rounded,
+                onTap: () async {
                   Navigator.of(context).pop();
-                  await cubit.setSort(v);
-                },
-              ),
-              _RadioTile(
-                title: 'Giá giảm dần',
-                value: 'fee_desc',
-                groupValue: currentSort,
-                onChanged: (v) async {
-                  Navigator.of(context).pop();
-                  await cubit.setSort(v);
-                },
-              ),
-              _RadioTile(
-                title: 'Mới nhất',
-                value: 'newest',
-                groupValue: currentSort,
-                onChanged: (v) async {
-                  Navigator.of(context).pop();
-                  await cubit.setSort(v);
+                  await cubit.setSort('fee_asc');
                 },
               ),
               const SizedBox(height: 10),
+              _OptionTile(
+                title: 'Giá giảm dần',
+                subtitle: 'Khoá học đắt trước',
+                selected: currentSort == 'fee_desc',
+                icon: Icons.trending_down_rounded,
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  await cubit.setSort('fee_desc');
+                },
+              ),
+              const SizedBox(height: 10),
+              _OptionTile(
+                title: 'Mới nhất',
+                subtitle: 'Cập nhật gần đây',
+                selected: currentSort == 'newest',
+                icon: Icons.fiber_new_rounded,
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  await cubit.setSort('newest');
+                },
+              ),
+              const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.primary,
+                    side: BorderSide(color: AppColors.primary.withOpacity(0.6)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
                   onPressed: () async {
                     Navigator.of(context).pop();
                     await cubit.setSort(null);
@@ -102,6 +125,8 @@ class _CourseTabState extends State<CourseTab> {
     final minCtl = TextEditingController(text: current.minFee?.toString() ?? '');
     final maxCtl = TextEditingController(text: current.maxFee?.toString() ?? '');
 
+    String? tempLevel = current.level;
+
     showModalBottomSheet(
       context: context,
       useSafeArea: true,
@@ -112,75 +137,173 @@ class _CourseTabState extends State<CourseTab> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
       ),
       builder: (_) {
-        return Padding(
-          padding: EdgeInsets.fromLTRB(
-            16,
-            8,
-            16,
-            18 + MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Bộ lọc',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                    ),
+        return StatefulBuilder(
+          builder: (ctx, setModalState) {
+            return Padding(
+              padding: EdgeInsets.fromLTRB(
+                16,
+                8,
+                16,
+                18 + MediaQuery.of(context).viewInsets.bottom,
               ),
-              const SizedBox(height: 12),
-              Row(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(
-                    child: TextField(
-                      controller: minCtl,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        hintText: 'Min fee',
-                      ),
+                  Text(
+                    'Bộ lọc',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textPrimary,
+                        ),
+                  ),
+                  const SizedBox(height: 14),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Trình độ',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary,
+                          ),
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: TextField(
-                      controller: maxCtl,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        hintText: 'Max fee',
+                  const SizedBox(height: 10),
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: [
+                      _ChoiceChip(
+                        label: 'Cơ bản',
+                        selected: tempLevel == 'beginner',
+                        onTap: () => setModalState(() => tempLevel = tempLevel == 'beginner' ? null : 'beginner'),
                       ),
+                      _ChoiceChip(
+                        label: 'Trung cấp',
+                        selected: tempLevel == 'intermediate',
+                        onTap: () => setModalState(() => tempLevel = tempLevel == 'intermediate' ? null : 'intermediate'),
+                      ),
+                      _ChoiceChip(
+                        label: 'Nâng cao',
+                        selected: tempLevel == 'advanced',
+                        onTap: () => setModalState(() => tempLevel = tempLevel == 'advanced' ? null : 'advanced'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Học phí',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary,
+                          ),
                     ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _MoneyField(
+                          controller: minCtl,
+                          hintText: 'Tối thiểu',
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _MoneyField(
+                          controller: maxCtl,
+                          hintText: 'Tối đa',
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: [
+                        _QuickChip(
+                          label: 'Dưới 500k',
+                          onTap: () {
+                            minCtl.text = '';
+                            maxCtl.text = '500000';
+                            FocusScope.of(context).unfocus();
+                          },
+                        ),
+                        _QuickChip(
+                          label: '500k – 1tr',
+                          onTap: () {
+                            minCtl.text = '500000';
+                            maxCtl.text = '1000000';
+                            FocusScope.of(context).unfocus();
+                          },
+                        ),
+                        _QuickChip(
+                          label: '1tr – 2tr',
+                          onTap: () {
+                            minCtl.text = '1000000';
+                            maxCtl.text = '2000000';
+                            FocusScope.of(context).unfocus();
+                          },
+                        ),
+                        _QuickChip(
+                          label: 'Trên 2tr',
+                          onTap: () {
+                            minCtl.text = '2000000';
+                            maxCtl.text = '';
+                            FocusScope.of(context).unfocus();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.textPrimary,
+                            side: BorderSide(color: AppColors.border.withOpacity(0.9)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                            await cubit.resetFilterOnly();
+                          },
+                          child: const Text('Reset bộ lọc'),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          ),
+                          onPressed: () async {
+                            final minFee = double.tryParse(minCtl.text.trim());
+                            final maxFee = double.tryParse(maxCtl.text.trim());
+
+                            Navigator.of(context).pop();
+
+                            await cubit.setLevel(tempLevel);
+                            await cubit.setFeeRange(minFee: minFee, maxFee: maxFee);
+                          },
+                          child: const Text('Áp dụng'),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () async {
-                        Navigator.of(context).pop();
-                        await cubit.resetFilters();
-                      },
-                      child: const Text('Reset'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final minFee = double.tryParse(minCtl.text.trim());
-                        final maxFee = double.tryParse(maxCtl.text.trim());
-                        Navigator.of(context).pop();
-                        await cubit.setFeeRange(minFee: minFee, maxFee: maxFee);
-                      },
-                      child: const Text('Áp dụng'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     ).whenComplete(() {
@@ -200,9 +323,7 @@ class _CourseTabState extends State<CourseTab> {
           final exception = state.exception;
           if (exception != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(exception.message),
-              ),
+              SnackBar(content: Text(exception.message)),
             );
           }
         },
@@ -210,11 +331,11 @@ class _CourseTabState extends State<CourseTab> {
           if (state.isLoading && state.courses.isEmpty) {
             return Scaffold(
               backgroundColor: AppColors.background,
-              body: const Center(
-                child: CircularProgressIndicator(),
-              ),
+              body: const Center(child: CircularProgressIndicator()),
             );
           }
+
+          final req = state.filterRequest;
 
           return Scaffold(
             backgroundColor: AppColors.background,
@@ -222,22 +343,15 @@ class _CourseTabState extends State<CourseTab> {
               title: const Text('Khoá học'),
             ),
             body: RefreshIndicator(
-              onRefresh: () async {
-                await context.read<CourseCubit>().refresh();
-              },
+              onRefresh: () async => context.read<CourseCubit>().refresh(),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 10),
                     child: _SearchField(
                       controller: _searchController,
                       initialValue: state.keyword,
-                      onSubmitted: (value) {
-                        context.read<CourseCubit>().search(value.trim());
-                      },
+                      onSubmitted: (value) => context.read<CourseCubit>().search(value.trim()),
                       onClear: () {
                         _searchController.clear();
                         context.read<CourseCubit>().search('');
@@ -245,23 +359,77 @@ class _CourseTabState extends State<CourseTab> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _ActionPill(
-                          label: 'Bộ lọc',
-                          icon: Icons.tune_rounded,
-                          onTap: () => _showFilterSheet(context),
+                        Expanded(
+                          child: _ActionPill(
+                            label: 'Bộ lọc',
+                            icon: Icons.tune_rounded,
+                            highlight: (req.level != null) || (req.minFee != null) || (req.maxFee != null),
+                            onTap: () => _showFilterSheet(context),
+                          ),
                         ),
-                        _ActionPill(
-                          label: 'Giá',
-                          icon: Icons.swap_vert_rounded,
-                          onTap: () => _showSortSheet(context),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _ActionPill(
+                            label: 'Sắp xếp',
+                            icon: Icons.swap_vert_rounded,
+                            highlight: req.sort != null,
+                            onTap: () => _showSortSheet(context),
+                          ),
                         ),
                       ],
                     ),
                   ),
+                  if (state.hasActiveFilters)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            if (req.level != null)
+                              _ActiveChip(
+                                label: req.level == 'beginner'
+                                    ? 'Cơ bản'
+                                    : req.level == 'intermediate'
+                                        ? 'Trung cấp'
+                                        : req.level == 'advanced'
+                                            ? 'Nâng cao'
+                                            : req.level!,
+                                onRemove: () => context.read<CourseCubit>().setLevel(null),
+                              ),
+                            if (req.minFee != null || req.maxFee != null)
+                              _ActiveChip(
+                                label: '${req.minFee != null ? _formatMoney(req.minFee!) : '0₫'} – ${req.maxFee != null ? _formatMoney(req.maxFee!) : '∞'}',
+                                onRemove: () => context.read<CourseCubit>().setFeeRange(minFee: null, maxFee: null),
+                              ),
+                            if (req.sort != null)
+                              _ActiveChip(
+                                label: req.sort == 'fee_asc'
+                                    ? 'Giá ↑'
+                                    : req.sort == 'fee_desc'
+                                        ? 'Giá ↓'
+                                        : req.sort == 'newest'
+                                            ? 'Mới nhất'
+                                            : req.sort!,
+                                onRemove: () => context.read<CourseCubit>().setSort(null),
+                              ),
+                            const SizedBox(width: 10),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: AppColors.primary,
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              ),
+                              onPressed: () => context.read<CourseCubit>().resetAllFilters(),
+                              child: const Text('Xoá tất cả'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   Expanded(
                     child: _CourseList(state: state),
                   ),
@@ -270,175 +438,6 @@ class _CourseTabState extends State<CourseTab> {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class _RadioTile extends StatelessWidget {
-  final String title;
-  final String value;
-  final String? groupValue;
-  final ValueChanged<String> onChanged;
-
-  const _RadioTile({
-    required this.title,
-    required this.value,
-    required this.groupValue,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final selected = value == groupValue;
-    return InkWell(
-      borderRadius: BorderRadius.circular(12),
-      onTap: () => onChanged(value),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: AppColors.border.withOpacity(0.8),
-            width: 0.6,
-          ),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-            ),
-            Icon(
-              selected ? Icons.radio_button_checked : Icons.radio_button_off,
-              color: selected ? AppColors.primary : AppColors.textMuted,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ActionPill extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  const _ActionPill({
-    required this.label,
-    required this.icon,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
-        child: Container(
-          height: 40,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: AppColors.border.withOpacity(0.8),
-              width: 0.6,
-            ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 20, color: AppColors.textPrimary),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              const SizedBox(width: 6),
-              const Icon(
-                Icons.expand_more_rounded,
-                size: 20,
-                color: AppColors.textMuted,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SearchField extends StatelessWidget {
-  final TextEditingController controller;
-  final String initialValue;
-  final ValueChanged<String> onSubmitted;
-  final VoidCallback onClear;
-
-  const _SearchField({
-    required this.controller,
-    required this.initialValue,
-    required this.onSubmitted,
-    required this.onClear,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (controller.text != initialValue) {
-      controller.text = initialValue;
-      controller.selection = TextSelection.fromPosition(
-        TextPosition(offset: controller.text.length),
-      );
-    }
-
-    return TextField(
-      controller: controller,
-      textInputAction: TextInputAction.search,
-      onSubmitted: onSubmitted,
-      decoration: InputDecoration(
-        hintText: 'Tìm kiếm khoá học...',
-        prefixIcon: const Icon(Icons.search_rounded),
-        suffixIcon: controller.text.isNotEmpty
-            ? IconButton(
-                icon: const Icon(Icons.close_rounded),
-                onPressed: onClear,
-              )
-            : null,
-        filled: true,
-        fillColor: AppColors.surface,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(
-            color: AppColors.border.withOpacity(0.8),
-            width: 0.6,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(
-            color: AppColors.border.withOpacity(0.8),
-            width: 0.6,
-          ),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-          borderSide: BorderSide(
-            color: AppColors.primary,
-            width: 1.2,
-          ),
-        ),
       ),
     );
   }
@@ -455,23 +454,19 @@ class _CourseList extends StatelessWidget {
       return ListView(
         padding: const EdgeInsets.fromLTRB(16, 80, 16, 24),
         children: [
-          const Icon(
-            Icons.menu_book_outlined,
-            size: 64,
-            color: AppColors.textMuted,
-          ),
+          const Icon(Icons.menu_book_outlined, size: 64, color: AppColors.textMuted),
           const SizedBox(height: 12),
           Text(
             'Chưa có khoá học nào',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 6),
           Text(
-            'Vui lòng thử lại sau hoặc thay đổi từ khoá tìm kiếm.',
+            'Vui lòng thử lại sau hoặc thay đổi bộ lọc/từ khoá.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.textSecondary,
                 ),
@@ -485,9 +480,7 @@ class _CourseList extends StatelessWidget {
       length: state.courses.length,
       currentPage: state.page,
       pageCount: state.pageCount,
-      onScrollToEnd: () {
-        context.read<CourseCubit>().loadMore();
-      },
+      onScrollToEnd: () => context.read<CourseCubit>().loadMore(),
       itemBuilder: (context, index) {
         final course = state.courses[index];
         return Padding(
@@ -495,6 +488,362 @@ class _CourseList extends StatelessWidget {
           child: CourseListItem(course: course),
         );
       },
+    );
+  }
+}
+
+class _SearchField extends StatefulWidget {
+  final TextEditingController controller;
+  final String initialValue;
+  final ValueChanged<String> onSubmitted;
+  final VoidCallback onClear;
+
+  const _SearchField({
+    required this.controller,
+    required this.initialValue,
+    required this.onSubmitted,
+    required this.onClear,
+  });
+
+  @override
+  State<_SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<_SearchField> {
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_onChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onChanged);
+    super.dispose();
+  }
+
+  void _onChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.controller.text != widget.initialValue) {
+      widget.controller.text = widget.initialValue;
+      widget.controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: widget.controller.text.length),
+      );
+    }
+
+    return TextField(
+      controller: widget.controller,
+      textInputAction: TextInputAction.search,
+      onSubmitted: widget.onSubmitted,
+      decoration: InputDecoration(
+        hintText: 'Tìm kiếm khoá học...',
+        prefixIcon: Icon(Icons.search_rounded, color: AppColors.textMuted.withOpacity(0.9)),
+        suffixIcon: widget.controller.text.isNotEmpty
+            ? IconButton(
+                icon: const Icon(Icons.close_rounded),
+                onPressed: widget.onClear,
+              )
+            : null,
+        filled: true,
+        fillColor: AppColors.surface,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: AppColors.border.withOpacity(0.9), width: 0.7),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: AppColors.border.withOpacity(0.9), width: 0.7),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.2),
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionPill extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final bool highlight;
+  final VoidCallback onTap;
+
+  const _ActionPill({
+    required this.label,
+    required this.icon,
+    required this.onTap,
+    this.highlight = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final borderColor = highlight ? AppColors.primary.withOpacity(0.55) : AppColors.border.withOpacity(0.85);
+    final bgColor = highlight ? AppColors.primaryLight.withOpacity(0.55) : AppColors.surface;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          height: 42,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: borderColor, width: 0.8),
+          ),
+          child: Row(
+            children: [
+              Icon(icon, size: 20, color: AppColors.textPrimary),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+              ),
+              const Icon(Icons.expand_more_rounded, size: 20, color: AppColors.textMuted),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _OptionTile extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final bool selected;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _OptionTile({
+    required this.title,
+    required this.subtitle,
+    required this.selected,
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final border = selected ? AppColors.primary.withOpacity(0.45) : AppColors.border.withOpacity(0.85);
+    final bg = selected ? AppColors.primaryLight.withOpacity(0.55) : AppColors.surface;
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(14),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: border, width: 0.9),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.border.withOpacity(0.9), width: 0.8),
+              ),
+              child: Icon(icon, color: selected ? AppColors.primary : AppColors.textPrimary),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textPrimary,
+                        ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              selected ? Icons.radio_button_checked : Icons.radio_button_off,
+              color: selected ? AppColors.primary : AppColors.textMuted,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ChoiceChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _ChoiceChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bg = selected ? AppColors.primary : AppColors.surface;
+    final fg = selected ? Colors.white : AppColors.textPrimary;
+    final border = selected ? AppColors.primary.withOpacity(0.7) : AppColors.border.withOpacity(0.9);
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(999),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(color: border, width: 0.9),
+        ),
+        child: Text(
+          label,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: fg,
+                fontWeight: FontWeight.w700,
+              ),
+        ),
+      ),
+    );
+  }
+}
+
+class _QuickChip extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+
+  const _QuickChip({required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(999),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+        decoration: BoxDecoration(
+          color: AppColors.surfaceMuted,
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(color: AppColors.border.withOpacity(0.85), width: 0.8),
+        ),
+        child: Text(
+          label,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.textPrimary,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MoneyField extends StatelessWidget {
+  final TextEditingController controller;
+  final String hintText;
+
+  const _MoneyField({
+    required this.controller,
+    required this.hintText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        hintText: hintText,
+        filled: true,
+        fillColor: AppColors.surface,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.border.withOpacity(0.9), width: 0.7),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.border.withOpacity(0.9), width: 0.7),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.2),
+        ),
+      ),
+    );
+  }
+}
+
+class _ActiveChip extends StatelessWidget {
+  final String label;
+  final VoidCallback onRemove;
+
+  const _ActiveChip({
+    required this.label,
+    required this.onRemove,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        decoration: BoxDecoration(
+          color: AppColors.primaryLight.withOpacity(0.6),
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(color: AppColors.primary.withOpacity(0.35), width: 0.9),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              label,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.textPrimary,
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+            const SizedBox(width: 6),
+            InkWell(
+              borderRadius: BorderRadius.circular(999),
+              onTap: onRemove,
+              child: const Padding(
+                padding: EdgeInsets.all(2),
+                child: Icon(Icons.close_rounded, size: 18, color: AppColors.textPrimary),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
