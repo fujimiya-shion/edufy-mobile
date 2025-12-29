@@ -32,3 +32,16 @@ enum LessonStatus {
   @JsonValue('locked')
   locked,
 }
+
+
+enum SocialProvider {
+  google("google");
+
+  final String value;
+
+  const SocialProvider(this.value);
+}
+
+extension SocialProviderExtension on SocialProvider {
+  String get label => value;
+}

@@ -1,5 +1,7 @@
 import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
+import 'package:edufy_mobile/src/core/services/google/google_auth_service.dart';
 import 'package:edufy_mobile/src/data/repositories/auth/i_auth_repository.dart';
+import 'package:edufy_mobile/src/shared/enums/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'email_input_state.dart';
@@ -15,13 +17,13 @@ class EmailInputCubit extends Cubit<EmailInputState> {
       state.copyWith(
         email: value,
         isSuccess: false,
-        clearException: true,
+        exception: null
       ),
     );
   }
 
   void clearError() {
-    emit(state.copyWith(clearException: true));
+    emit(state.copyWith(exception: null));
   }
 
   Future<void> submitEmail() async {
@@ -38,16 +40,58 @@ class EmailInputCubit extends Cubit<EmailInputState> {
       return;
     }
 
-    // emit(state.copyWith(isLoading: true, isSuccess: false, clearException: true));
+    emit(state.copyWith(isLoading: true, isSuccess: false, exception: null));
 
-    // TODO: đổi đúng method theo IAuthRepository của em
+    final apiResult = await authRepository.checkEmailExist(email: email);
+
+    apiResult.when(
+      success: (response) {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            isSuccess: true,
+            isEmailExist: response.data?.exists,
+          ),
+        );
+      },
+      failure: (error) {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            isSuccess: false,
+            exception: error,
+            isEmailExist: false,
+          ),
+        );
+      }
+    );
   }
 
   Future<void> signInWithGoogle() async {
     if (state.isLoading || state.isGoogleLoading) return;
+    final idToken = await GoogleAuthService.signInAndGetServerAuthCode();
+    if(idToken == null) return;
+    final apiResult = await authRepository.userSocialLogin(provider: SocialProvider.google.name, idToken: idToken);
 
-    // emit(state.copyWith(isGoogleLoading: true, isSuccess: false, clearException: true));
-
-    // TODO: đổi đúng method theo IAuthRepository của em
+    apiResult.when(
+      success: (response) {
+        emit(
+          state.copyWith(
+            isGoogleLoading: false,
+            isSuccess: true,
+            isEmailExist: true,
+          ),
+        );
+      },
+      failure: (error) {
+        emit(
+          state.copyWith(
+            isGoogleLoading: false,
+            isSuccess: false,
+            exception: error,
+          ),
+        );
+      }
+    );
   }
 }

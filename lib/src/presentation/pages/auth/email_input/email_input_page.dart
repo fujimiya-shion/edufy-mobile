@@ -1,5 +1,4 @@
 import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
-import 'package:edufy_mobile/src/core/services/google/google_auth_service.dart';
 import 'package:edufy_mobile/src/data/repositories/auth/i_auth_repository.dart';
 import 'package:edufy_mobile/src/shared/configs/export.dart';
 import 'package:flutter/material.dart';
@@ -161,8 +160,7 @@ class _EmailInputPageState extends State<EmailInputPage> {
                           ? null
                           : () async {
                               FocusScope.of(context).unfocus();
-                              final code = await GoogleAuthService.signInAndGetServerAuthCode();
-                              print(code);
+                              cubit.signInWithGoogle();
                             },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: AppColors.surface,
