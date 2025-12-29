@@ -14,7 +14,7 @@ class AuthRepository extends BaseRepository implements IAuthRepository {
   @override
   Future<ApiResult<ObjectResponse<CheckExistResponse>, ApiException>> checkEmailExist({required String email}) {
     return post(
-      endpoint: AppEndpoints.checkPhoneExist,
+      endpoint: AppEndpoints.checkEmailExist,
       data: {'email': email},
       fromMap: (map) => ObjectResponse.fromJson(map, CheckExistResponse.fromJson),
     );
@@ -34,7 +34,7 @@ class AuthRepository extends BaseRepository implements IAuthRepository {
   Future<ApiResult<ObjectResponse<UserLoginResponse>, ApiException>> userLogin({required String email, required String password}) {
     return post(
       endpoint: AppEndpoints.login,
-      data: {'phone': email, 'password': password},
+      data: {'email': email, 'password': password},
       fromMap: (map) => ObjectResponse.fromJson(map, UserLoginResponse.fromJson),
     );
   }
