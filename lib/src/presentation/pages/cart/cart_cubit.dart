@@ -1,5 +1,5 @@
 // lib/src/presentation/pages/cart/cart_cubit.dart
-import 'package:edufy_mobile/src/data/repositories/cart/i_cart_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/cart/i_cart_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cart_state.dart';

@@ -1,7 +1,7 @@
 import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
 import 'package:edufy_mobile/src/data/dtos/common/pagination_response.dart';
 import 'package:edufy_mobile/src/data/models/banner/banner_model.dart';
-import 'package:edufy_mobile/src/data/repositories/banner/i_banner_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/banner/i_banner_repository.dart';
 import 'package:edufy_mobile/src/shared/types/api_result.dart';
 
 class MockBannerRepository implements IBannerRepository {

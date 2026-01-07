@@ -1,4 +1,4 @@
-import 'package:edufy_mobile/src/data/repositories/teacher/i_teacher_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/teacher/i_teacher_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'teacher_detail_state.dart';

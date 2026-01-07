@@ -1,5 +1,5 @@
 import 'package:edufy_mobile/src/data/models/course/course_model.dart';
-import 'package:edufy_mobile/src/data/repositories/course/i_course_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/course/i_course_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'course_detail_state.dart';
 

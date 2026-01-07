@@ -1,6 +1,6 @@
 // lib/src/presentation/pages/training_center/detail/training_center_detail_cubit.dart
 import 'package:edufy_mobile/src/data/models/training_center/training_center_model.dart';
-import 'package:edufy_mobile/src/data/repositories/training_center/i_training_center_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/training_center/i_training_center_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'training_center_detail_state.dart';

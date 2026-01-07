@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:edufy_mobile/src/data/models/export.dart';
-import 'package:edufy_mobile/src/data/repositories/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/course/listing/course_listing_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

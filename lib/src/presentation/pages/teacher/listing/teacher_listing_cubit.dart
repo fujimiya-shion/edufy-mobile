@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
 import 'package:edufy_mobile/src/data/dtos/common/export.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
-import 'package:edufy_mobile/src/data/repositories/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/teacher/listing/teacher_listing_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -2,8 +2,8 @@ import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
 import 'package:edufy_mobile/src/data/dtos/auth/auth_dto.dart';
 import 'package:edufy_mobile/src/data/dtos/common/export.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
-import 'package:edufy_mobile/src/data/repositories/auth/export.dart';
-import 'package:edufy_mobile/src/data/repositories/base_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/auth/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/base_repository.dart';
 import 'package:edufy_mobile/src/shared/configs/app_endpoints.dart';
 import 'package:edufy_mobile/src/shared/types/api_result.dart';
 

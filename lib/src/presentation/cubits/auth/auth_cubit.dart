@@ -1,5 +1,5 @@
 import 'package:edufy_mobile/src/data/models/user/user_model.dart';
-import 'package:edufy_mobile/src/data/repositories/auth/i_auth_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/auth/i_auth_repository.dart';
 import 'package:edufy_mobile/src/presentation/cubits/auth/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

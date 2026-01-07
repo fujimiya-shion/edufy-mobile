@@ -1,7 +1,7 @@
 import 'package:edufy_mobile/src/data/models/banner/banner_model.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
-import 'package:edufy_mobile/src/data/repositories/banner/i_banner_repository.dart';
-import 'package:edufy_mobile/src/data/repositories/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/banner/i_banner_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/home/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

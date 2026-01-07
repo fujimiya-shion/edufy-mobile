@@ -1,4 +1,4 @@
-import 'package:edufy_mobile/src/data/repositories/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
 import 'package:edufy_mobile/src/shared/configs/export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

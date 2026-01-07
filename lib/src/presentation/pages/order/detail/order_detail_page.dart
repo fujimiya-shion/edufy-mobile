@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edufy_mobile/src/data/models/order/order_item_model.dart';
 import 'package:edufy_mobile/src/data/models/order/order_model.dart';
 import 'package:edufy_mobile/src/data/models/payment/payment_model.dart';
-import 'package:edufy_mobile/src/data/repositories/order/i_order_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/order/i_order_repository.dart';
 import 'order_detail_cubit.dart';
 import 'order_detail_state.dart';
 

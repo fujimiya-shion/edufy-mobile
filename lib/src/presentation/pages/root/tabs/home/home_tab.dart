@@ -2,8 +2,8 @@
 import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
 import 'package:edufy_mobile/src/data/models/banner/banner_model.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
-import 'package:edufy_mobile/src/data/repositories/banner/export.dart';
-import 'package:edufy_mobile/src/data/repositories/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/banner/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/home/home_cubit.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/home/home_state.dart';
 import 'package:edufy_mobile/src/shared/components/card_item/course_horizontal_card.dart';

@@ -15,6 +15,8 @@ abstract class _$EmailInputStateCWProxy {
 
   EmailInputState isSuccess(bool isSuccess);
 
+  EmailInputState isGoogleSuccess(bool isGoogleSuccess);
+
   EmailInputState isEmailExist(bool? isEmailExist);
 
   EmailInputState exception(ApiException? exception);
@@ -31,6 +33,7 @@ abstract class _$EmailInputStateCWProxy {
     bool isLoading,
     bool isGoogleLoading,
     bool isSuccess,
+    bool isGoogleSuccess,
     bool? isEmailExist,
     ApiException? exception,
   });
@@ -57,6 +60,10 @@ class _$EmailInputStateCWProxyImpl implements _$EmailInputStateCWProxy {
   EmailInputState isSuccess(bool isSuccess) => call(isSuccess: isSuccess);
 
   @override
+  EmailInputState isGoogleSuccess(bool isGoogleSuccess) =>
+      call(isGoogleSuccess: isGoogleSuccess);
+
+  @override
   EmailInputState isEmailExist(bool? isEmailExist) =>
       call(isEmailExist: isEmailExist);
 
@@ -77,6 +84,7 @@ class _$EmailInputStateCWProxyImpl implements _$EmailInputStateCWProxy {
     Object? isLoading = const $CopyWithPlaceholder(),
     Object? isGoogleLoading = const $CopyWithPlaceholder(),
     Object? isSuccess = const $CopyWithPlaceholder(),
+    Object? isGoogleSuccess = const $CopyWithPlaceholder(),
     Object? isEmailExist = const $CopyWithPlaceholder(),
     Object? exception = const $CopyWithPlaceholder(),
   }) {
@@ -99,6 +107,12 @@ class _$EmailInputStateCWProxyImpl implements _$EmailInputStateCWProxy {
           ? _value.isSuccess
           // ignore: cast_nullable_to_non_nullable
           : isSuccess as bool,
+      isGoogleSuccess:
+          isGoogleSuccess == const $CopyWithPlaceholder() ||
+              isGoogleSuccess == null
+          ? _value.isGoogleSuccess
+          // ignore: cast_nullable_to_non_nullable
+          : isGoogleSuccess as bool,
       isEmailExist: isEmailExist == const $CopyWithPlaceholder()
           ? _value.isEmailExist
           // ignore: cast_nullable_to_non_nullable

@@ -1,5 +1,5 @@
 // lib/src/presentation/pages/order/detail/order_detail_cubit.dart
-import 'package:edufy_mobile/src/data/repositories/order/i_order_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/order/i_order_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'order_detail_state.dart';

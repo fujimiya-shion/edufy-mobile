@@ -1,6 +1,6 @@
 import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
-import 'package:edufy_mobile/src/data/repositories/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/course/checkout/course_checkout_cubit.dart';
 import 'package:edufy_mobile/src/presentation/pages/course/checkout/course_checkout_state.dart';
 import 'package:edufy_mobile/src/shared/configs/export.dart';

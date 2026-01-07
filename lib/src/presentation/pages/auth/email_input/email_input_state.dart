@@ -10,6 +10,7 @@ class EmailInputState extends Equatable {
   final bool isLoading;
   final bool isGoogleLoading;
   final bool isSuccess;
+  final bool isGoogleSuccess;
   final bool? isEmailExist;
   final ApiException? exception;
 
@@ -18,6 +19,7 @@ class EmailInputState extends Equatable {
     this.isLoading = false,
     this.isGoogleLoading = false,
     this.isSuccess = false,
+    this.isGoogleSuccess = false,
     this.isEmailExist,
     this.exception,
   });
@@ -36,6 +38,7 @@ class EmailInputState extends Equatable {
     isLoading,
     isGoogleLoading,
     isSuccess,
+    isGoogleSuccess,
     isEmailExist,
     exception
   ];

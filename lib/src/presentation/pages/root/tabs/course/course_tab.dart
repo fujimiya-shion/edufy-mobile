@@ -1,6 +1,6 @@
 // lib/src/presentation/pages/root/tabs/course/course_tab.dart
 import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
-import 'package:edufy_mobile/src/data/repositories/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/course/course_cubit.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/course/course_state.dart';
 import 'package:edufy_mobile/src/shared/components/common/scroll_pagination.dart';

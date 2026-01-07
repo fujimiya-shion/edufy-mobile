@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edufy_mobile/src/data/models/lesson/lesson_model.dart';
 import 'package:edufy_mobile/src/data/models/lesson/lesson_media_model.dart';
 import 'package:edufy_mobile/src/data/models/course/course_media_model.dart';
-import 'package:edufy_mobile/src/data/repositories/lesson/i_lesson_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/lesson/i_lesson_repository.dart';
 import 'lesson_detail_cubit.dart';
 import 'lesson_detail_state.dart';
 

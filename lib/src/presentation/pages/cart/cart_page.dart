@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:edufy_mobile/src/data/models/cart/cart_item_model.dart';
 import 'package:edufy_mobile/src/data/models/cart/cart_model.dart';
-import 'package:edufy_mobile/src/data/repositories/cart/i_cart_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/cart/i_cart_repository.dart';
 import 'cart_cubit.dart';
 import 'cart_state.dart';
 

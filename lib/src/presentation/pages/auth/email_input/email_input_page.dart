@@ -1,8 +1,10 @@
 import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
-import 'package:edufy_mobile/src/data/repositories/auth/i_auth_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/auth/i_auth_repository.dart';
+import 'package:edufy_mobile/src/routes/app_router.dart';
 import 'package:edufy_mobile/src/shared/configs/export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'email_input_cubit.dart';
 import 'email_input_state.dart';
@@ -28,8 +30,6 @@ class _EmailInputPageState extends State<EmailInputPage> {
     return BlocProvider(
       create: (_) => EmailInputCubit(authRepository: getIt.get<IAuthRepository>()),
       child: BlocConsumer<EmailInputCubit, EmailInputState>(
-        listenWhen: (prev, curr) =>
-            prev.exception != curr.exception || prev.isSuccess != curr.isSuccess,
         listener: (context, state) {
           if (state.exception != null) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -38,6 +38,10 @@ class _EmailInputPageState extends State<EmailInputPage> {
                 backgroundColor: AppColors.error,
               ),
             );
+          }
+
+          if(state.isGoogleSuccess && !state.isGoogleLoading) {
+            context.go(AppRouter.root);
           }
 
           if (state.isSuccess) {

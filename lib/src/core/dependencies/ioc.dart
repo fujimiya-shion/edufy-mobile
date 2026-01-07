@@ -1,8 +1,9 @@
 // lib/src/core/dependencies/ioc.dart
 import 'package:dio/dio.dart';
 import 'package:edufy_mobile/src/core/network/api_client.dart';
-import 'package:edufy_mobile/src/data/repositories/banner/export.dart';
-import 'package:edufy_mobile/src/data/repositories/export.dart';
+import 'package:edufy_mobile/src/data/repositories/local/pref_repository.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/banner/export.dart';
+import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
 import 'package:edufy_mobile/src/presentation/cubits/export.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -17,7 +18,8 @@ class Ioc {
     // ========== COMMON ==========
     // SharedPreferences
     final prefs = await SharedPreferences.getInstance();
-    getIt.registerLazySingleton<SharedPreferences>(() => prefs);
+    final PrefRepository prefRepository = PrefRepository(preferences: prefs);
+    getIt.registerLazySingleton<PrefRepository>(() => prefRepository);
 
     // Dio + Logger
     final dio = Dio(

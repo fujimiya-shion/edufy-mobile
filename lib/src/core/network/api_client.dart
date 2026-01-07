@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:edufy_mobile/src/core/network/interceptors/auth_interceptor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -8,9 +9,9 @@ class ApiClient {
   ApiClient(this._dio) {
     final interceptors = <Interceptor>[];
     if (kDebugMode) {
-      interceptors.add(PrettyDioLogger(requestBody: true));
+      interceptors.add(PrettyDioLogger(requestHeader: true));
     }
-    // interceptors.add(AuthInterceptor(_dio));
+    interceptors.add(AuthInterceptor());
 
     _dio.options = BaseOptions(
       baseUrl: const String.fromEnvironment('BASE_URL'),
