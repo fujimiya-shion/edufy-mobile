@@ -25,7 +25,7 @@ class _CourseListingPageState extends State<CourseListingPage> {
   void initState() {
     super.initState();
     _cubit = CourseListingCubit(
-      courseRepository: getIt.get<ICourseRepository>(),
+      courseRepository: locator.get<ICourseRepository>(),
     )..initial();
   }
 

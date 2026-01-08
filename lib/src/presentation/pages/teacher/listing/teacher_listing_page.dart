@@ -25,7 +25,7 @@ class _TeacherListingPageState extends State<TeacherListingPage> {
   void initState() {
     super.initState();
     _cubit = TeacherListingCubit(
-      teacherRepository: getIt.get<ITeacherRepository>(),
+      teacherRepository: locator.get<ITeacherRepository>(),
     )..initial();
   }
 

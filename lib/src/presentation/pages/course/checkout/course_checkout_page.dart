@@ -32,7 +32,7 @@ class _CourseCheckoutPageState extends State<CourseCheckoutPage> {
   Widget build(BuildContext context) {
     return BlocProvider<CourseCheckoutCubit>(
       create: (_) => CourseCheckoutCubit(
-        orderRepository: getIt<IOrderRepository>(),
+        orderRepository: locator<IOrderRepository>(),
       )..initial(course: widget.course),
       child: BlocConsumer<CourseCheckoutCubit, CourseCheckoutState>(
         listener: (context, state) {

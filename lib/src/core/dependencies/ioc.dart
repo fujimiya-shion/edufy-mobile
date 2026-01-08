@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final getIt = GetIt.instance;
+final locator = GetIt.instance;
 
 enum InstanceNames { mock, persistent }
 
@@ -19,7 +19,7 @@ class Ioc {
     // SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     final PrefRepository prefRepository = PrefRepository(preferences: prefs);
-    getIt.registerLazySingleton<PrefRepository>(() => prefRepository);
+    locator.registerLazySingleton<PrefRepository>(() => prefRepository);
 
     // Dio + Logger
     final dio = Dio(
@@ -41,172 +41,172 @@ class Ioc {
       ),
     );
 
-    getIt.registerLazySingleton<Dio>(() => dio);
-    getIt.registerLazySingleton<ApiClient>(() => ApiClient(getIt.get()));
+    locator.registerLazySingleton<Dio>(() => dio);
+    locator.registerLazySingleton<ApiClient>(() => ApiClient(locator.get()));
 
     // ========== REPOSITORIES ==========
 
     // --- Course ---
     // persistent (API)
-    getIt.registerLazySingleton<ICourseRepository>(
-      () => CourseRepository(dio: getIt.get()),
+    locator.registerLazySingleton<ICourseRepository>(
+      () => CourseRepository(dio: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
     // mock (dump data)
-    getIt.registerLazySingleton<ICourseRepository>(
+    locator.registerLazySingleton<ICourseRepository>(
       () => MockCourseRepository(),
       instanceName: InstanceNames.mock.name,
     );
     // default hiện tại: dùng mock
-    getIt.registerLazySingleton<ICourseRepository>(
-      () => CourseRepository(dio: getIt.get()),
+    locator.registerLazySingleton<ICourseRepository>(
+      () => CourseRepository(dio: locator.get()),
     );
 
     // --- Cart ---
-    getIt.registerLazySingleton<ICartRepository>(
-      () => CartRepository(apiClient: getIt.get()),
+    locator.registerLazySingleton<ICartRepository>(
+      () => CartRepository(apiClient: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<ICartRepository>(
+    locator.registerLazySingleton<ICartRepository>(
       () => MockCartRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<ICartRepository>(
+    locator.registerLazySingleton<ICartRepository>(
       () => MockCartRepository(),
     );
 
     // --- Order ---
-    getIt.registerLazySingleton<IOrderRepository>(
-      () => OrderRepository(apiClient: getIt.get()),
+    locator.registerLazySingleton<IOrderRepository>(
+      () => OrderRepository(apiClient: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<IOrderRepository>(
+    locator.registerLazySingleton<IOrderRepository>(
       () => MockOrderRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<IOrderRepository>(
+    locator.registerLazySingleton<IOrderRepository>(
       () => MockOrderRepository(),
     );
 
     // --- Payment ---
-    getIt.registerLazySingleton<IPaymentRepository>(
-      () => PaymentRepository(apiClient: getIt.get()),
+    locator.registerLazySingleton<IPaymentRepository>(
+      () => PaymentRepository(apiClient: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<IPaymentRepository>(
+    locator.registerLazySingleton<IPaymentRepository>(
       () => MockPaymentRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<IPaymentRepository>(
+    locator.registerLazySingleton<IPaymentRepository>(
       () => MockPaymentRepository(),
     );
 
         // --- Teacher ---
-    getIt.registerLazySingleton<ITeacherRepository>(
-      () => TeacherRepository(apiClient: getIt.get()),
+    locator.registerLazySingleton<ITeacherRepository>(
+      () => TeacherRepository(apiClient: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<ITeacherRepository>(
+    locator.registerLazySingleton<ITeacherRepository>(
       () => const MockTeacherRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<ITeacherRepository>(
+    locator.registerLazySingleton<ITeacherRepository>(
       () => const MockTeacherRepository(),
     );
 
     // --- Training Center ---
-    getIt.registerLazySingleton<ITrainingCenterRepository>(
-      () => TrainingCenterRepository(apiClient: getIt.get()),
+    locator.registerLazySingleton<ITrainingCenterRepository>(
+      () => TrainingCenterRepository(apiClient: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<ITrainingCenterRepository>(
+    locator.registerLazySingleton<ITrainingCenterRepository>(
       () => const MockTrainingCenterRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<ITrainingCenterRepository>(
+    locator.registerLazySingleton<ITrainingCenterRepository>(
       () => const MockTrainingCenterRepository(),
     );
 
     // --- Lesson ---
-    getIt.registerLazySingleton<ILessonRepository>(
-      () => LessonRepository(apiClient: getIt.get()),
+    locator.registerLazySingleton<ILessonRepository>(
+      () => LessonRepository(apiClient: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<ILessonRepository>(
+    locator.registerLazySingleton<ILessonRepository>(
       () => const MockLessonRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<ILessonRepository>(
+    locator.registerLazySingleton<ILessonRepository>(
       () => const MockLessonRepository(),
     );
 
     // --- Ribbon ---
-    getIt.registerLazySingleton<IRibbonRepository>(
-      () => RibbonRepository(apiClient: getIt.get()),
+    locator.registerLazySingleton<IRibbonRepository>(
+      () => RibbonRepository(apiClient: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<IRibbonRepository>(
+    locator.registerLazySingleton<IRibbonRepository>(
       () => const MockRibbonRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<IRibbonRepository>(
+    locator.registerLazySingleton<IRibbonRepository>(
       () => const MockRibbonRepository(),
     );
 
     // --- FCM Token ---
-    getIt.registerLazySingleton<IFcmTokenRepository>(
-      () => FcmTokenRepository(apiClient: getIt.get()),
+    locator.registerLazySingleton<IFcmTokenRepository>(
+      () => FcmTokenRepository(apiClient: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<IFcmTokenRepository>(
+    locator.registerLazySingleton<IFcmTokenRepository>(
       () => MockFcmTokenRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<IFcmTokenRepository>(
+    locator.registerLazySingleton<IFcmTokenRepository>(
       () => MockFcmTokenRepository(),
     );
 
     // --- Payment Log ---
-    getIt.registerLazySingleton<IPaymentLogRepository>(
-      () => PaymentLogRepository(apiClient: getIt.get()),
+    locator.registerLazySingleton<IPaymentLogRepository>(
+      () => PaymentLogRepository(apiClient: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<IPaymentLogRepository>(
+    locator.registerLazySingleton<IPaymentLogRepository>(
       () => const MockPaymentLogRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<IPaymentLogRepository>(
+    locator.registerLazySingleton<IPaymentLogRepository>(
       () => const MockPaymentLogRepository(),
     );
 
-    getIt.registerLazySingleton<IAuthRepository>(
-      () => AuthRepository(dio: getIt.get()),
+    locator.registerLazySingleton<IAuthRepository>(
+      () => AuthRepository(dio: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<IAuthRepository>(
+    locator.registerLazySingleton<IAuthRepository>(
       () => const MockAuthRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<IAuthRepository>(
-      () => AuthRepository(dio: getIt.get()),
+    locator.registerLazySingleton<IAuthRepository>(
+      () => AuthRepository(dio: locator.get()),
     );
 
     // --- Banner ---
-    getIt.registerLazySingleton<IBannerRepository>(
-      () => BannerRepository(dio: getIt.get()),
+    locator.registerLazySingleton<IBannerRepository>(
+      () => BannerRepository(dio: locator.get()),
       instanceName: InstanceNames.persistent.name,
     );
-    getIt.registerLazySingleton<IBannerRepository>(
+    locator.registerLazySingleton<IBannerRepository>(
       () => MockBannerRepository(),
       instanceName: InstanceNames.mock.name,
     );
-    getIt.registerLazySingleton<IBannerRepository>(
+    locator.registerLazySingleton<IBannerRepository>(
       () => MockBannerRepository(),
     );
 
     // Cubits
-    getIt.registerLazySingleton<AuthCubit>(
-      () => AuthCubit(authRepository: getIt<IAuthRepository>()),
+    locator.registerLazySingleton<AuthCubit>(
+      () => AuthCubit(authRepository: locator<IAuthRepository>()),
     );
 
   }

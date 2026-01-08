@@ -45,3 +45,18 @@ enum SocialProvider {
 extension SocialProviderExtension on SocialProvider {
   String get label => value;
 }
+
+enum AppStatus {
+  initial,
+  loading,
+  done,
+  success,
+  error,
+}
+
+extension AppStatusExtension on AppStatus {
+  bool get isInitial => this == AppStatus.initial;
+  bool get isLoading => this == AppStatus.loading;
+  bool get isSuccess => this == AppStatus.success;
+  bool get isError => this == AppStatus.error;
+}

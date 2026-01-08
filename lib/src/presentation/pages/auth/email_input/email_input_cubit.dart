@@ -80,10 +80,10 @@ class EmailInputCubit extends Cubit<EmailInputState> {
       success: (response) async {
         final user = response.data!.user;
         final token = response.data!.token;
-        final pref = getIt.get<PrefRepository>();
+        final pref = locator.get<PrefRepository>();
         await pref.setUserToken(token);
 
-        final authCubit = getIt.get<AuthCubit>();
+        final authCubit = locator.get<AuthCubit>();
         authCubit.setUser(user);
         await authCubit.loadMe();
         

@@ -25,7 +25,7 @@ class _EdufyAppState extends State<EdufyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthCubit>(
-      create: (_) => getIt<AuthCubit>()..loadMe(),
+      create: (_) => locator<AuthCubit>()..loadMe(),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Edufy',

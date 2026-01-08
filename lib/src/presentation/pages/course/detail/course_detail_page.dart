@@ -35,7 +35,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
     return BlocProvider(
       create: (context) {
         final cubit = CourseDetailCubit(
-          courseRepository: getIt.get(),
+          courseRepository: locator.get(),
         );
 
         if (widget.initialCourse != null) {

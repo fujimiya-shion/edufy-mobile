@@ -28,7 +28,7 @@ class _EmailInputPageState extends State<EmailInputPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => EmailInputCubit(authRepository: getIt.get<IAuthRepository>()),
+      create: (_) => EmailInputCubit(authRepository: locator.get<IAuthRepository>()),
       child: BlocConsumer<EmailInputCubit, EmailInputState>(
         listener: (context, state) {
           if (state.exception != null) {

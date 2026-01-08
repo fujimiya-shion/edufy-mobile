@@ -30,7 +30,7 @@ class _LessonListingPageState extends State<LessonListingPage> {
   void initState() {
     super.initState();
     _cubit = LessonListingCubit(
-      lessonRepository: getIt.get<ILessonRepository>(),
+      lessonRepository: locator.get<ILessonRepository>(),
       courseId: widget.courseId,
     )..initial();
   }

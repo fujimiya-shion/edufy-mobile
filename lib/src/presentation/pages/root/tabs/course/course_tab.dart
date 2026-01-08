@@ -316,7 +316,7 @@ class _CourseTabState extends State<CourseTab> {
   Widget build(BuildContext context) {
     return BlocProvider<CourseCubit>(
       create: (_) => CourseCubit(
-        courseRepository: getIt<ICourseRepository>(),
+        courseRepository: locator<ICourseRepository>(),
       )..initial(),
       child: BlocConsumer<CourseCubit, CourseState>(
         listener: (context, state) {

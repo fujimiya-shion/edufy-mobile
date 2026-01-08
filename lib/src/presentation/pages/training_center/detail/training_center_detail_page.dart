@@ -25,7 +25,7 @@ class TrainingCenterDetailPage extends StatelessWidget {
     return BlocProvider(
       create: (_) {
         final cubit = TrainingCenterDetailCubit(
-          repository: getIt.get()
+          repository: locator.get()
         );
 
         // Có data sẵn thì show ngay

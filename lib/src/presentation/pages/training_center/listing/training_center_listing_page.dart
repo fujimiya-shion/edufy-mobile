@@ -27,7 +27,7 @@ class _TrainingCenterListingPageState
   void initState() {
     super.initState();
     _cubit = TrainingCenterListingCubit(
-      repository: getIt.get<ITrainingCenterRepository>(),
+      repository: locator.get<ITrainingCenterRepository>(),
     )..initial();
   }
 

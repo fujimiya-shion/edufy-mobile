@@ -7,7 +7,7 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final prefs = getIt<PrefRepository>();
+    final prefs = locator<PrefRepository>();
 
     final userToken = prefs.userToken;
     if (userToken.isNotEmpty) {

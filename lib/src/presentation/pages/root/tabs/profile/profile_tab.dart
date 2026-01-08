@@ -125,7 +125,7 @@ class _ProfileTabState extends State<ProfileTab> {
               padding: const EdgeInsets.all(16),
               children: [
                 _ProfileHeader(
-                  name: user?.fullName ?? '',
+                  name: user?.name ?? '',
                   email: user?.email ?? '',
                   avatarUrl: user?.avatarPath,
                 ),

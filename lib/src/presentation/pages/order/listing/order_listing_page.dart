@@ -25,7 +25,7 @@ class _OrderListingPageState extends State<OrderListingPage> {
   void initState() {
     super.initState();
     _cubit = OrderListingCubit(
-      orderRepository: getIt.get<IOrderRepository>(),
+      orderRepository: locator.get<IOrderRepository>(),
     )..initial();
   }
 
