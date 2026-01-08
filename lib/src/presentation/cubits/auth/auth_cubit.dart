@@ -1,4 +1,6 @@
+import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
 import 'package:edufy_mobile/src/data/models/user/user_model.dart';
+import 'package:edufy_mobile/src/data/repositories/local/pref_repository.dart';
 import 'package:edufy_mobile/src/data/repositories/remote/auth/i_auth_repository.dart';
 import 'package:edufy_mobile/src/presentation/cubits/auth/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,6 +55,8 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void logout() {
+    final PrefRepository prefRepository = locator.get<PrefRepository>();
+    prefRepository.setUserToken(null);
     emit(
       state.copyWith(
         loggedInUser: null,

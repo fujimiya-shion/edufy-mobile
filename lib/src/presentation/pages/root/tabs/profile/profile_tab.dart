@@ -2,6 +2,7 @@ import 'package:edufy_mobile/src/presentation/cubits/auth/auth_cubit.dart';
 import 'package:edufy_mobile/src/presentation/cubits/auth/auth_state.dart';
 import 'package:edufy_mobile/src/presentation/pages/root/tabs/profile/profile_tab_cubit.dart';
 import 'package:edufy_mobile/src/routes/app_router.dart';
+import 'package:edufy_mobile/src/shared/components/dialog/app_confirmation_dialog.dart';
 import 'package:edufy_mobile/src/shared/configs/export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -168,7 +169,16 @@ class _ProfileTabState extends State<ProfileTab> {
                 const SizedBox(height: 24),
                 _LogoutTile(
                   onTap: () {
-                    context.read<AuthCubit>().logout();
+                    showDialog(
+                      context: context,
+                      builder: (context) => AppConfirmationDialog(
+                        title: "Đăng xuất",
+                        description: "Bạn có chắc chắn muốn đăng xuất không?",
+                        onConfirm: () {
+                          context.read<AuthCubit>().logout();
+                        },
+                      ),
+                    );
                   },
                 ),
               ],

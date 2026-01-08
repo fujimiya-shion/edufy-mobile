@@ -23,7 +23,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    _cubit.checkAuthenticated();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _cubit.checkAuthenticated();
+    });
   }
 
   @override

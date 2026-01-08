@@ -22,6 +22,9 @@ class SplashCubit extends Cubit<SplashState> {
 
     if(token.isEmpty) {
       emit(state.copyWith(status: AppStatus.error));
+      print("GO TO HERE");
+      print("STATUS: ${state.status}");
+      return;
     }
 
     final apiResult = await authRepository.me();
