@@ -60,3 +60,8 @@ extension AppStatusExtension on AppStatus {
   bool get isSuccess => this == AppStatus.success;
   bool get isError => this == AppStatus.error;
 }
+
+enum PaymentProviders {
+  stripe,
+  payos,
+}

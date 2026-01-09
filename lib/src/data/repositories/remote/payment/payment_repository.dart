@@ -1,6 +1,8 @@
 // lib/src/data/repositories/payment/payment_repository.dart
 import 'package:edufy_mobile/src/core/network/api_client.dart';
 import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
+import 'package:edufy_mobile/src/data/dtos/common/export.dart';
+import 'package:edufy_mobile/src/data/dtos/payment/payment_dto.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/data/repositories/remote/base_repository.dart';
 import 'package:edufy_mobile/src/shared/configs/app_endpoints.dart';
@@ -12,20 +14,17 @@ class PaymentRepository extends BaseRepository implements IPaymentRepository {
   PaymentRepository({required ApiClient apiClient}) : super(dio: apiClient);
 
   @override
-  Future<ApiResult<PaymentModel, ApiException>> createIntent({
-    required int orderId,
+  Future<ApiResult<ObjectResponse<PaymentCreateIntentResponse>, ApiException>> createIntent({
+    required PaymentPayloadRequest payload,
     required String provider,
   }) {
-    return post<PaymentModel>(
+    return post(
       endpoint: AppEndpoints.paymentsCreateIntent,
       data: {
-        'order_id': orderId,
+        ...payload.toJson(),
         'provider': provider,
       },
-      fromMap: (json) {
-        final data = (json['data'] ?? json) as Map<String, dynamic>;
-        return PaymentModel.fromJson(data);
-      },
+      fromMap: (json) => ObjectResponse.fromJson(json, PaymentCreateIntentResponse.fromJson),
     );
   }
 

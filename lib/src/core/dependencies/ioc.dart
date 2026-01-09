@@ -1,6 +1,8 @@
 // lib/src/core/dependencies/ioc.dart
 import 'package:dio/dio.dart';
 import 'package:edufy_mobile/src/core/network/api_client.dart';
+import 'package:edufy_mobile/src/core/services/payment/payment_gateway_service.dart';
+import 'package:edufy_mobile/src/core/services/payment/stripe_payment_service.dart';
 import 'package:edufy_mobile/src/data/repositories/local/pref_repository.dart';
 import 'package:edufy_mobile/src/data/repositories/remote/banner/export.dart';
 import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
@@ -98,7 +100,7 @@ class Ioc {
       instanceName: InstanceNames.mock.name,
     );
     locator.registerLazySingleton<IPaymentRepository>(
-      () => MockPaymentRepository(),
+      () => PaymentRepository(apiClient: locator.get()),
     );
 
         // --- Teacher ---
@@ -209,5 +211,10 @@ class Ioc {
       () => AuthCubit(authRepository: locator<IAuthRepository>()),
     );
 
+    // Infras
+    final StripePaymentService stripePaymentService = StripePaymentService(paymentRepository: locator.get());
+    await stripePaymentService.init(publishableKey: const String.fromEnvironment("STRIPE_PUBLISHABLE_KEY"));
+    locator.registerLazySingleton<StripePaymentService>(() => stripePaymentService);
+    locator.registerLazySingleton<PaymentGatewayService>(() => PaymentGatewayService());
   }
 }

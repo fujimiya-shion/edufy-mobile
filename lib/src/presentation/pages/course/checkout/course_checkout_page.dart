@@ -1,4 +1,5 @@
 import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
+import 'package:edufy_mobile/src/core/services/payment/payment_gateway_service.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
 import 'package:edufy_mobile/src/presentation/pages/course/checkout/course_checkout_cubit.dart';
@@ -33,6 +34,8 @@ class _CourseCheckoutPageState extends State<CourseCheckoutPage> {
     return BlocProvider<CourseCheckoutCubit>(
       create: (_) => CourseCheckoutCubit(
         orderRepository: locator<IOrderRepository>(),
+        paymentRepository: locator<IPaymentRepository>(),
+        paymentGatewayService: locator<PaymentGatewayService>(),
       )..initial(course: widget.course),
       child: BlocConsumer<CourseCheckoutCubit, CourseCheckoutState>(
         listener: (context, state) {

@@ -1,15 +1,24 @@
+import 'package:edufy_mobile/src/core/dependencies/ioc.dart';
 import 'package:edufy_mobile/src/core/network/exception/api_exception.dart';
+import 'package:edufy_mobile/src/core/services/payment/payment_gateway_service.dart';
+import 'package:edufy_mobile/src/data/dtos/payment/payment_dto.dart';
 import 'package:edufy_mobile/src/data/dtos/transaction/transaction_dto.dart';
 import 'package:edufy_mobile/src/data/models/export.dart';
 import 'package:edufy_mobile/src/data/repositories/remote/export.dart';
+import 'package:edufy_mobile/src/presentation/cubits/auth/auth_cubit.dart';
 import 'package:edufy_mobile/src/presentation/pages/course/checkout/course_checkout_state.dart';
+import 'package:edufy_mobile/src/shared/enums/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseCheckoutCubit extends Cubit<CourseCheckoutState> {
   final IOrderRepository orderRepository;
+  final IPaymentRepository paymentRepository;
+  final PaymentGatewayService paymentGatewayService;
 
   CourseCheckoutCubit({
     required this.orderRepository,
+    required this.paymentRepository,
+    required this.paymentGatewayService,
   }) : super(const CourseCheckoutState());
 
   Future<void> initial({required CourseModel course}) async {
@@ -82,6 +91,15 @@ class CourseCheckoutCubit extends Cubit<CourseCheckoutState> {
         checkoutSuccess: false,
         createdOrder: null,
       ),
+    );
+
+    await paymentGatewayService.pay(
+      payload: PaymentPayloadRequest(
+        orderId: 1,
+        amount: 20000,
+        customer: locator<AuthCubit>().state.loggedInUser!,
+      ),
+      provider: PaymentProviders.stripe.name,
     );
 
     final req = OrderCheckoutRequest(
